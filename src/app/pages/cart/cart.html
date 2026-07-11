@@ -20,7 +20,7 @@
             <button (click)="cambiarCantidad(item.id_producto, item.cantidad + 1)">+</button>
           </div>
 
-          <p class="subtotal">{{ (item.precio * item.cantidad) | number:'1.2-2' }} € €</p>
+          <p class="subtotal">{{ (item.precio * item.cantidad) | number:'1.2-2' }} €</p>
 
           <button class="btn-eliminar" (click)="eliminar(item.id_producto)">Eliminar</button>
         </div>

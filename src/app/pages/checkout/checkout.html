@@ -19,6 +19,27 @@
           <option value="google_pay">Google Pay</option>
           <option value="apple_pay">Apple Pay</option>
         </select>
+
+        @if (metodo_pago() === 'tarjeta') {
+          <div class="checkout-pago-detalle">
+            <div>
+              <label>Número de tarjeta</label>
+              <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" />
+            </div>
+            <div class="checkout-pago-fila">
+              <div>
+                <label>Caducidad</label>
+                <input type="text" placeholder="MM/AA" maxlength="5" />
+              </div>
+              <div>
+                <label>CVV</label>
+                <input type="text" placeholder="123" maxlength="3" />
+              </div>
+            </div>
+          </div>
+        } @else {
+          <p class="checkout-pago-nota">{{ notaMetodoPago() }}</p>
+        }
       </section>
 
       <section class="bloque">

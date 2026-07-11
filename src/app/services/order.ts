@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../environment';
 
 @Injectable({ providedIn: 'root' })
 export class Order {
@@ -27,13 +27,6 @@ export class Order {
     return this.http.post(`${this.apiUrl}/checkout/payment`, { id_pedido });
   }
 
-  // GET /api/admin/orders → todos los pedidos (admin)
-  getTodosPedidos() {
-    return this.http.get<any[]>(`${this.apiUrl}/admin/orders`);
-  }
-
-  // PUT /api/admin/orders/:id → cambiar estado (admin)
-  cambiarEstado(id: number, estado: string) {
-    return this.http.put(`${this.apiUrl}/admin/orders/${id}`, { estado });
-  }
+  // La gestión de pedidos del panel admin (listar todos, cambiar estado)
+  // vive en AdminService, que ya la usa pages/admin/pedidos/pedidos.ts.
 }

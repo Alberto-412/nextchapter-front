@@ -54,9 +54,6 @@ export const routes: Routes = [
   // Home
   { path: '', component: Home },
 
-  // Rutas públicas
-  { path: 'login', component: Login },
-
   // ── RUTAS PÚBLICAS ────────────────────────────────────────
   // No requieren token. Cualquiera puede acceder.
   { path: 'login',    component: Login },
@@ -91,25 +88,11 @@ export const routes: Routes = [
   { path: 'reviews',   component: Reviews,   canActivate: [authGuard] },
 
   // ── RUTAS DEL CATÁLOGO (compañeros) ───────────────────────
-  { path: '',           component: Catalogo    }, // ruta raíz
   { path: 'catalogo',   component: Catalogo    },
   { path: 'libros/:id', component: LibroDetalle }, // :id = parámetro dinámico
   { path: 'cart',       component: Cart        },
   { path: 'checkout',   component: Checkout    },
   { path: 'orders',     component: MyOrders    },
-  { path: 'orders/:id', component: OrderDetail },
-
-  // Ruta temporal de desarrollo — pendiente de eliminar
-  { path: 'XXXXXXXXXXX', redirectTo: 'login', pathMatch: 'full' },
-
-  // Catálogo
-  { path: 'catalogo', component: Catalogo },
-  { path: 'libros/:id', component: LibroDetalle },
-
-  //Carrito y ordenes
-  { path: 'cart', component: Cart },
-  { path: 'checkout', component: Checkout },
-  { path: 'orders', component: MyOrders },
   { path: 'orders/:id', component: OrderDetail },
 
   //Paginas simuladas
@@ -127,4 +110,7 @@ export const routes: Routes = [
 
   //Contacto
   { path: 'contacto', component: Contacto },
+
+  // Cualquier URL no reconocida → inicio.
+  { path: '**', redirectTo: '' },
 ];

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -26,6 +26,19 @@ export class Checkout {
   cargando = signal(false);
   error = signal('');
   necesitaLogin = signal(false); // ← nuevo: controla el aviso de login
+
+  // Mensaje que se muestra bajo el selector de método de pago cuando
+  // no es "tarjeta" (para tarjeta mostramos los campos mock en su lugar).
+  // El pago en sí es simulado (proyecto académico): esto es solo feedback
+  // visual para que se note que el método elegido importa.
+  private readonly NOTAS_METODO_PAGO: Record<string, string> = {
+    paypal: 'Al confirmar el pedido te redirigiremos a PayPal para completar el pago.',
+    bizum: 'Recibirás una notificación en tu app Bizum para confirmar el pago.',
+    google_pay: 'Confirma el pago con tu huella o Face ID al finalizar el pedido.',
+    apple_pay: 'Confirma el pago con tu huella o Face ID al finalizar el pedido.',
+  };
+
+  notaMetodoPago = computed(() => this.NOTAS_METODO_PAGO[this.metodo_pago()] ?? '');
 
   subtotal() {
     return this.items().reduce((acc, item) => acc + item.precio * item.cantidad, 0);

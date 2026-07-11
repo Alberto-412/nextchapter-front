@@ -53,12 +53,20 @@ export const adminGuard: CanActivateFn = () => {
     return false;
   }
 
-  const payload = JSON.parse(atob(token.split('.')[1]));
+  // Un token corrupto o con un payload que no es JSON válido no debe
+  // romper la navegación con una excepción: lo tratamos como no logado.
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
 
-  if (payload.rol !== 'admin') {
-    router.navigate(['/']);
+    if (payload.rol !== 'admin') {
+      router.navigate(['/']);
+      return false;
+    }
+
+    return true;
+  } catch {
+    localStorage.removeItem('token');
+    router.navigate(['/login']);
     return false;
   }
-
-  return true;
 };

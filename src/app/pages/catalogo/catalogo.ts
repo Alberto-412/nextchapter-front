@@ -8,6 +8,7 @@ import { FiltrosCatalogo } from '../../component/filtrosCatalogo/filtrosCatalogo
 import { LibroCard } from '../../component/libroCard/libroCard';
 import { Newsletter } from '../../component/newsletter/newsletter';
 import { Footer } from '../../component/footer/footer';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-catalogo',
@@ -20,7 +21,16 @@ export class Catalogo {
    * Conecta Angular con el back de libros.
    */
   private readonly librosService = inject(LibrosService);
+  private readonly usuarioService = inject(UsuarioService);
   private route = inject(ActivatedRoute);
+
+  /**
+   * IDs de los libros que el usuario ya tiene en favoritos.
+   * Se carga una sola vez (si hay sesión) y se pasa a cada
+   * app-libro-card para que el corazón muestre el estado real
+   * en vez de arrancar siempre "no favorito".
+   */
+  favoritosIds = signal<Set<number>>(new Set());
 
   /**
    * Aquí guardamos los libros que se muestran en pantalla.
@@ -94,6 +104,17 @@ export class Catalogo {
     this.filtrosActuales.set(filtros);
     this.cargarLibros(filtros);
   });
+
+  // Si hay sesión, cargamos la wishlist una sola vez para poder
+  // marcar el corazón de cada tarjeta con el estado real.
+  if (localStorage.getItem('token')) {
+    this.usuarioService.getWishlist().subscribe({
+      next: (data: any) => {
+        this.favoritosIds.set(new Set(data.map((item: any) => item.libro_id)));
+      },
+      error: () => this.favoritosIds.set(new Set()),
+    });
+  }
 }
 
 

@@ -15,6 +15,14 @@
 .checkout-item-cant { font-size: 0.8rem; color: var(--color-gris-medio); margin: 0; }
 .checkout-item-precio { font-weight: 700; color: var(--color-azul); }
 .checkout-error { color: var(--color-rosa); margin-top: 1rem; font-size: 0.9rem; text-align: center; }
+
+.checkout-pago-detalle { margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem; }
+.checkout-pago-fila { display: flex; gap: 1rem; }
+.checkout-pago-fila > div { flex: 1; }
+.checkout-pago-nota {
+  margin-top: 1rem; padding: 0.9rem 1rem; background: var(--color-crema);
+  border-radius: 8px; font-size: 0.85rem; color: var(--color-gris-medio);
+}
 @media (max-width: 768px) { .checkout-grid { grid-template-columns: 1fr; } }
 
 .checkout-login-aviso {

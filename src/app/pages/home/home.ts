@@ -41,8 +41,8 @@ export class Home {
       const response = await this.librosService.getAll();
 
       this.novedades.set(response.data.slice(0, 15));
-    } catch (error) {
-      console.log('Error al cargar las novedades del home', error);
+    } catch {
+      this.novedades.set([]);
     }
   }
 
