@@ -1,0 +1,323 @@
+/**
+ * Contenedor principal de la página.
+ */
+.envios {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+/**
+ * Hero superior.
+ */
+.envios__hero {
+  max-width: 900px;
+  margin: 0 auto 4rem;
+  text-align: center;
+}
+
+.envios__eyebrow {
+  margin-bottom: 0.75rem;
+
+  color: var(--color-morado);
+
+  font-size: 0.85rem;
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.envios h1 {
+  margin-bottom: 1rem;
+
+  color: var(--color-azul);
+
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.envios__intro {
+  color: var(--color-gris-medio);
+  font-size: 1.08rem;
+  line-height: 1.8;
+}
+
+/**
+ * Grid con los tipos de envío.
+ */
+.envios__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+
+  margin-bottom: 4rem;
+}
+
+/**
+ * Tarjeta individual de envío.
+ */
+.envios__card {
+  padding: 2rem;
+  border-radius: 1.5rem;
+
+  background-color: var(--color-blanco);
+
+  text-align: center;
+
+  box-shadow: 0 12px 30px rgb(31 42 68 / 8%);
+}
+
+.envios__icon {
+  margin-bottom: 1rem;
+
+  color: var(--color-morado);
+
+  font-size: 3rem;
+
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.envios__card h2 {
+  margin-bottom: 0.5rem;
+
+  color: var(--color-azul);
+
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.envios__precio {
+  margin-bottom: 1rem;
+
+  color: var(--color-rosa);
+
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.envios__card p {
+  color: var(--color-gris-medio);
+  line-height: 1.8;
+}
+
+/**
+ * Bloque de preparación del pedido.
+ */
+.envios__preparacion {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+  align-items: center;
+
+  margin-bottom: 4rem;
+}
+
+.envios__preparacion-texto h2 {
+  margin-bottom: 1rem;
+
+  color: var(--color-azul);
+
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.envios__preparacion-texto p {
+  color: var(--color-gris-medio);
+  line-height: 1.8;
+}
+
+.envios__preparacion-card {
+  padding: 2.5rem;
+  border-radius: 2rem;
+
+  background-color: var(--color-azul);
+  color: var(--color-blanco);
+
+  box-shadow: 0 16px 40px rgb(31 42 68 / 16%);
+}
+
+.envios__preparacion-card span {
+  margin-bottom: 1rem;
+
+  color: var(--color-amarillo);
+
+  font-size: 3rem;
+
+  font-variation-settings:
+    'FILL' 1;
+}
+
+.envios__preparacion-card p {
+  margin: 0;
+
+  color: var(--color-gris-claro);
+
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+/**
+ * Sección de pasos.
+ */
+.envios__pasos {
+  margin-bottom: 4rem;
+}
+
+.envios__pasos h2 {
+  margin-bottom: 2rem;
+
+  color: var(--color-azul);
+
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.envios__timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.timeline__item {
+  padding: 2rem 1.5rem;
+  border-radius: 1.5rem;
+
+  background-color: var(--color-blanco);
+
+  text-align: center;
+
+  box-shadow: 0 10px 25px rgb(31 42 68 / 6%);
+}
+
+.timeline__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 60px;
+  height: 60px;
+
+  margin: 0 auto 1rem;
+
+  border-radius: 50%;
+
+  background-color: var(--color-morado);
+  color: var(--color-blanco);
+
+  font-size: 1.8rem;
+
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.timeline__item p {
+  color: var(--color-gris-medio);
+  line-height: 1.7;
+}
+
+/**
+ * Bloque final de contacto.
+ */
+.envios__cta {
+  padding: 3rem;
+  border-radius: 2rem;
+
+  background-color: var(--color-azul);
+
+  text-align: center;
+}
+
+.envios__cta-icon {
+  margin-bottom: 1rem;
+
+  color: var(--color-amarillo);
+
+  font-size: 3rem;
+
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.envios__cta h2 {
+  margin-bottom: 1rem;
+
+  color: var(--color-blanco);
+
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.envios__cta p {
+  max-width: 760px;
+  margin: 0 auto 1.5rem;
+
+  color: var(--color-gris-claro);
+
+  line-height: 1.8;
+}
+
+.envios__cta a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1rem 1.75rem;
+
+  border-radius: 999px;
+
+  background-color: var(--color-amarillo);
+  color: var(--color-azul);
+
+  font-weight: 800;
+  text-decoration: none;
+
+  transition: all 0.2s ease;
+}
+
+.envios__cta a:hover {
+  background-color: var(--color-rosa);
+  color: var(--color-blanco);
+}
+
+/**
+ * Responsive para tablets.
+ */
+@media (max-width: 900px) {
+
+  .envios__grid,
+  .envios__preparacion,
+  .envios__timeline {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/**
+ * Responsive para móviles.
+ */
+@media (max-width: 768px) {
+
+  .envios {
+    padding: 3rem 1rem;
+  }
+
+  .envios__preparacion-card,
+  .envios__cta {
+    padding: 2rem 1.25rem;
+  }
+
+}

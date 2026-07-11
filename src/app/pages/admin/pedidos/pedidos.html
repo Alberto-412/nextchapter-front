@@ -1,0 +1,192 @@
+<!--
+  ============================================================
+  QUÉ HACE: Vista de gestión de pedidos. Alterna entre:
+            · Lista de pedidos (tabla desktop + tarjetas móvil)
+            · Detalle de un pedido concreto
+  ============================================================
+-->
+<div class="pedidos">
+
+    <div class="page-header">
+        <div>
+            <h1>Gestión de Pedidos</h1>
+            <p>Supervisa y gestiona todos los pedidos de la tienda</p>
+        </div>
+    </div>
+
+    @if (mensaje()) { <p class="msg-ok">{{ mensaje() }}</p> }
+    @if (error()) { <p class="msg-error">{{ error() }}</p> }
+
+    <!-- ── VISTA: LISTA ────────────────────────────────────
+         Visible cuando NO hay pedido seleccionado.
+    ─────────────────────────────────────────────────────── -->
+    @if (!pedidoSeleccionado()) {
+    <div class="card">
+        <div class="card-header">
+            <h2>Todos los pedidos</h2>
+            <div class="filtros">
+                <!-- Filtro por estado: al cambiar llama a filtrarEstado().
+                       $any($event.target).value → castea el EventTarget a
+                       HTMLSelectElement para acceder al .value sin error de TypeScript. -->
+                <select (change)="filtrarEstado($any($event.target).value)">
+                    <option value="">Todos los estados</option>
+                    @for (estado of estadosValidos; track estado) {
+                    <option [value]="estado">{{ estado }}</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <!-- TABLA DESKTOP (oculta en móvil con CSS) -->
+        <table class="tabla-desktop">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Total</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (pedido of pedidosFiltrados(); track pedido.id) {
+                <tr>
+                    <td>#{{ pedido.id }}</td>
+                    <td>
+                        <div class="cliente-cell">
+                            <div class="avatar">{{ pedido.cliente ? pedido.cliente[0] : '?' }}</div>
+                            <div>
+                                <span class="cliente-nombre">{{ pedido.cliente }}</span>
+                                <span class="cliente-mail">{{ pedido.mail }}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ pedido.fecha_pedido | date:'dd/MM/yyyy' }}</td>
+                    <td><span class="badge" [class]="pedido.estado">{{ pedido.estado }}</span></td>
+                    <td>{{ pedido.total }} €</td>
+                    <td>
+                        <!-- verPedido() llama al back con el ID para obtener el detalle completo -->
+                        <button class="btn-ver" (click)="verPedido(pedido.id)">👁 Ver</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- TARJETAS MÓVIL (ocultas en desktop con CSS)
+               Estrategia de doble renderizado: en vez de mostrar/ocultar
+               columnas en la tabla (problemático con el CSS encapsulado
+               de Angular), se renderizan dos estructuras HTML distintas
+               y el CSS elige cuál mostrar según el breakpoint. -->
+        <div class="lista-mobile">
+            @for (pedido of pedidosFiltrados(); track pedido.id) {
+            <div class="pedido-card">
+                <div class="pedido-card-top">
+                    <div class="cliente-cell">
+                        <div class="avatar">{{ pedido.cliente ? pedido.cliente[0] : '?' }}</div>
+                        <div>
+                            <span class="cliente-nombre">{{ pedido.cliente }}</span>
+                            <span class="cliente-mail">{{ pedido.mail }}</span>
+                        </div>
+                    </div>
+                    <span class="badge" [class]="pedido.estado">{{ pedido.estado }}</span>
+                </div>
+                <div class="pedido-card-info">
+                    <span class="info-chip"><span class="chip-label">ID</span> #{{ pedido.id }}</span>
+                    <span class="info-chip"><span class="chip-label">Fecha</span> {{ pedido.fecha_pedido |
+                        date:'dd/MM/yy' }}</span>
+                    <span class="info-chip"><span class="chip-label">Total</span> {{ pedido.total }} €</span>
+                </div>
+                <div class="pedido-card-acciones">
+                    <button class="btn-ver" (click)="verPedido(pedido.id)">👁 Ver pedido</button>
+                    <!-- En móvil el cambio de estado se hace directamente desde la lista,
+                             sin necesidad de abrir el detalle. -->
+                    <select class="select-estado" (change)="actualizarEstado(pedido.id, $any($event.target).value)">
+                        <option value="">Cambiar estado</option>
+                        @for (estado of estadosValidos; track estado) {
+                        <option [value]="estado">{{ estado }}</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+    }
+
+    <!-- ── VISTA: DETALLE DEL PEDIDO ───────────────────────
+         Visible cuando pedidoSeleccionado() tiene un valor.
+         Diseño en grid: tabla de productos a la izquierda,
+         sidebar con estado y datos del cliente a la derecha.
+    ─────────────────────────────────────────────────────── -->
+    @if (pedidoSeleccionado()) {
+    <div class="detalle-grid">
+
+        <div class="card detalle-productos">
+            <div class="card-header">
+                <!-- cerrar() pone pedidoSeleccionado a null → vuelve a la lista -->
+                <button class="btn-back" (click)="cerrar()">← Volver</button>
+                <h2>Detalle del pedido #{{ pedidoSeleccionado().id }}</h2>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Cantidad</th>
+                        <th>Precio unidad</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of pedidoSeleccionado().productos; track item.id_producto) {
+                    <tr>
+                        <td>{{ item.titulo }}</td>
+                        <td>{{ item.cantidad }}</td>
+                        <td>{{ item.precio_unidad }} €</td>
+                        <!-- Cálculo inline: cantidad × precio por unidad -->
+                        <td>{{ item.cantidad * item.precio_unidad }} €</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="totales">
+                <span>Total</span>
+                <span class="total-valor">{{ pedidoSeleccionado().total }} €</span>
+            </div>
+        </div>
+
+        <div class="detalle-sidebar">
+
+            <div class="card">
+                <h3>Estado del pedido</h3>
+                <span class="badge" [class]="pedidoSeleccionado().estado">{{ pedidoSeleccionado().estado }}</span>
+                <label>Cambiar estado</label>
+                <!-- Cambia el estado al seleccionar una opción nueva -->
+                <select (change)="actualizarEstado(pedidoSeleccionado().id, $any($event.target).value)">
+                    <option value="">Seleccionar estado</option>
+                    @for (estado of estadosValidos; track estado) {
+                    <option [value]="estado">{{ estado }}</option>
+                    }
+                </select>
+            </div>
+
+            <div class="card">
+                <h3>Información del cliente</h3>
+                <div class="info-row"><span class="info-label">👤 Nombre</span><span class="info-value">{{
+                        pedidoSeleccionado().cliente }}</span></div>
+                <div class="info-row"><span class="info-label">✉️ Email</span><span class="info-value">{{
+                        pedidoSeleccionado().mail }}</span></div>
+                <div class="info-row"><span class="info-label">📞 Teléfono</span><span class="info-value">{{
+                        pedidoSeleccionado().telefono }}</span></div>
+                <div class="info-row"><span class="info-label">📍 Dirección</span><span class="info-value">{{
+                        pedidoSeleccionado().direccion_envio }}</span></div>
+                <div class="info-row"><span class="info-label">💳 Pago</span><span class="info-value">{{
+                        pedidoSeleccionado().metodo_pago }}</span></div>
+            </div>
+        </div>
+
+    </div>
+    }
+
+</div>

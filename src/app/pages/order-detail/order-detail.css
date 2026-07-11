@@ -1,0 +1,64 @@
+.detalle-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; font-family: 'Montserrat', sans-serif; }
+.estado { text-align: center; color: var(--color-gris-medio); padding: 3rem 0; }
+.detalle-cabecera { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
+.detalle-cabecera h1 { color: var(--color-azul); margin: 0 0 0.3rem; }
+.detalle-fecha { color: var(--color-gris-medio); font-size: 0.9rem; margin: 0; }
+.detalle-info { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+.detalle-bloque { flex: 1; background: var(--color-blanco); border: 1px solid #eee; border-radius: 12px; padding: 1.2rem; }
+.detalle-bloque h3 { font-size: 0.85rem; color: var(--color-gris-medio); margin: 0 0 0.5rem; text-transform: uppercase; }
+.detalle-bloque p { color: var(--color-azul); margin: 0; }
+.capitalizar { text-transform: capitalize; }
+.detalle-productos { background: var(--color-blanco); border: 1px solid #eee; border-radius: 12px; padding: 1.5rem; }
+.detalle-productos h3 { color: var(--color-azul); margin: 0 0 1rem; }
+.detalle-item { display: flex; align-items: center; gap: 1rem; padding: 0.7rem 0; border-bottom: 1px solid #f3f3f3; }
+.detalle-item img { width: 45px; height: 65px; object-fit: cover; border-radius: 4px; }
+.detalle-item-info { flex: 1; }
+.detalle-titulo { font-weight: 600; color: var(--color-azul); margin: 0 0 0.2rem; }
+.detalle-cant { font-size: 0.8rem; color: var(--color-gris-medio); margin: 0; }
+.detalle-subtotal { font-weight: 700; color: var(--color-azul); }
+.detalle-total { display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 2px solid #eee; font-size: 1.3rem; }
+.detalle-total strong { color: var(--color-morado); }
+
+.detalle-acciones {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.btn-factura {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-morado);
+  color: var(--color-blanco);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-factura:hover {
+  background: var(--color-rosa);
+}
+
+/* la cabecera de factura solo se ve al imprimir */
+.solo-print {
+  display: none;
+}
+
+/* ===== MODO IMPRESIÓN ===== */
+@media print {
+  .no-print {
+    display: none !important;   /* oculta el botón */
+  }
+  .solo-print {
+    display: block !important;  /* muestra "Next Chapter / Factura" */
+    margin-bottom: 24px;
+  }
+  .detalle-container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    color: #000;
+  }
+}

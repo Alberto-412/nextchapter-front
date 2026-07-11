@@ -1,0 +1,199 @@
+<section class="librerias">
+
+    <!--
+    Hero principal.
+
+    Presentamos las librerías físicas de NextChapter
+    con el mismo tono cercano y geek del proyecto.
+  -->
+    <div class="librerias__hero">
+
+        <p class="librerias__eyebrow">
+            Nuestras sedes
+        </p>
+
+        <h1>
+            Nuestras librerías
+        </h1>
+
+        <p class="librerias__intro">
+            Aunque NextChapter vive mucho en internet, también tenemos puntos físicos
+            donde puedes venir a descubrir libros, cotillear novedades y perderte
+            entre estanterías como si estuvieras desbloqueando una zona secreta.
+        </p>
+
+    </div>
+
+    <!--
+    Tarjetas de librerías.
+
+    Usamos row y col de Bootstrap solo como apoyo responsive.
+    El diseño visual lo seguimos controlando con nuestro CSS.
+  -->
+    <div class="row g-4 librerias__grid">
+
+        <div class="col-12 col-md-6 col-lg-4">
+
+            <article class="libreria-card">
+
+                <span class="material-symbols-outlined libreria-card__icon">
+                    location_on
+                </span>
+
+                <h2>NextChapter Madrid</h2>
+
+                <p class="libreria-card__centro">
+                    Centro Comercial La Vaguada
+                </p>
+
+                <p>
+                    Av. de Monforte de Lemos, 36<br />
+                    28029 Madrid
+                </p>
+
+                <p class="libreria-card__horario">
+                    Lunes a sábado · 10:00 - 21:30
+                </p>
+
+                <a href="https://www.google.com/maps?q=Centro+Comercial+La+Vaguada+Madrid" target="_blank"
+                    rel="noopener noreferrer">
+                    Ver en Google Maps
+                </a>
+
+            </article>
+
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+
+            <article class="libreria-card">
+
+                <span class="material-symbols-outlined libreria-card__icon">
+                    local_library
+                </span>
+
+                <h2>NextChapter Almería</h2>
+
+                <p class="libreria-card__centro">
+                    Centro Comercial Torrecárdenas
+                </p>
+
+                <p>
+                    C. Médico Francisco Pérez, 44<br />
+                    04009 Almería
+                </p>
+
+                <p class="libreria-card__horario">
+                    Lunes a sábado · 10:00 - 22:00
+                </p>
+
+                <a href="https://www.google.com/maps?q=Centro+Comercial+Torrec%C3%A1rdenas+Almer%C3%ADa" target="_blank"
+                    rel="noopener noreferrer">
+                    Ver en Google Maps
+                </a>
+
+            </article>
+
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+
+            <article class="libreria-card">
+
+                <span class="material-symbols-outlined libreria-card__icon">
+                    store
+                </span>
+
+                <h2>NextChapter Talavera</h2>
+
+                <p class="libreria-card__centro">
+                    Centro Comercial Los Alfares
+                </p>
+
+                <p>
+                    Av. de Toledo, s/n<br />
+                    45600 Talavera de la Reina, Toledo
+                </p>
+
+                <p class="libreria-card__horario">
+                    Lunes a sábado · 10:00 - 22:00
+                </p>
+
+                <a href="https://www.google.com/maps?q=Centro+Comercial+Los+Alfares+Talavera+de+la+Reina"
+                    target="_blank" rel="noopener noreferrer">
+                    Ver en Google Maps
+                </a>
+
+            </article>
+
+        </div>
+
+    </div>
+
+    <!--
+    Bloque de mapa.
+
+    Usamos un iframe de Google Maps porque es sencillo,
+    no necesita API Key y queda perfecto para el proyecto.
+  -->
+    <div class="librerias__mapa">
+
+        <div class="librerias__mapa-texto">
+
+            <p class="librerias__eyebrow">
+                Encuéntranos
+            </p>
+
+            <h2>
+                Nuestra base principal está en Madrid
+            </h2>
+
+            <p>
+                Entre estanterías repletas de historias y mundos por descubrir,
+                nuestra librería te espera en el Centro Comercial La Vaguada.
+            </p>
+
+            <p>
+                Marca el destino en el mapa y prepárate para comenzar tu próxima aventura.
+            </p>
+
+        </div>
+
+        <div class="librerias__iframe">
+
+            <iframe src="https://www.google.com/maps?q=Centro+Comercial+La+Vaguada+Madrid&output=embed" width="100%"
+                height="420" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                title="Mapa de NextChapter Madrid en Centro Comercial La Vaguada">
+            </iframe>
+
+        </div>
+
+    </div>
+
+    <!--
+    Bloque final de contacto.
+  -->
+    <div class="librerias__cta">
+
+        <span class="material-symbols-outlined librerias__cta-icon">
+            support_agent
+        </span>
+
+        <h2>
+            ¿Quieres preguntarnos algo antes de venir?
+        </h2>
+
+        <p>
+            Escríbenos y te ayudamos con horarios, disponibilidad de libros
+            o cualquier duda que tengas antes de visitar una de nuestras librerías.
+        </p>
+
+        <a routerLink="/contacto">
+            Contactar con NextChapter
+        </a>
+
+    </div>
+
+</section>
+
+<app-footer></app-footer>

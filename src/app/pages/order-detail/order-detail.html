@@ -1,0 +1,56 @@
+// DETALLE DE UN PEDIDO
+<div class="detalle-container">
+  @if (cargando()) {
+    <p class="estado">Cargando pedido...</p>
+  } @else if (!pedido()) {
+    <p class="estado">No se encontró el pedido.</p>
+  } @else {
+    <div class="factura-cabecera solo-print">
+  <h2>Next Chapter</h2>
+  <p>Factura de tu pedido</p>
+</div>
+  <div class="detalle-cabecera">
+      <div>
+        <h1>Pedido #{{ pedido().id }}</h1>
+        <p class="detalle-fecha">{{ pedido().fecha_pedido | date: 'dd/MM/yyyy HH:mm' }}</p>
+      </div>
+      <app-order-status-badge [estado]="pedido().estado" />
+    </div>
+
+    <div class="detalle-info">
+      <div class="detalle-bloque">
+        <h3>Dirección de envío</h3>
+        <p>{{ pedido().direccion_envio }}</p>
+      </div>
+      <div class="detalle-bloque">
+        <h3>Método de pago</h3>
+        <p class="capitalizar">{{ pedido().metodo_pago }}</p>
+      </div>
+    </div>
+
+    <div class="detalle-productos">
+      <h3>Productos</h3>
+      @for (prod of pedido().productos; track prod.id_producto) {
+        <div class="detalle-item">
+          <img [src]="prod.imagen" [alt]="prod.titulo" />
+          <div class="detalle-item-info">
+            <p class="detalle-titulo">{{ prod.titulo }}</p>
+            <p class="detalle-cant">{{ prod.cantidad }} x {{ prod.precio_unidad | number:'1.2-2' }} €</p>
+          </div>
+          <span class="detalle-subtotal">{{ prod.cantidad * prod.precio_unidad | number:'1.2-2' }} €</span>
+        </div>
+      }
+    </div>
+
+    <div class="detalle-total">
+      <span>Total</span>
+      <strong>{{ pedido().total | number:'1.2-2' }} €</strong>
+    </div>
+    <div class="detalle-acciones no-print">
+  <button class="btn-factura" (click)="imprimirFactura()">
+    <span class="material-symbols-outlined">print</span>
+    Imprimir factura
+  </button>
+</div>
+  }
+</div>

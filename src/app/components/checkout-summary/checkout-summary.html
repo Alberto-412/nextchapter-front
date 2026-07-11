@@ -1,0 +1,26 @@
+// CAJA RESUMEN DE COSTES 
+
+<div class="resumen">
+  <h3>Resumen de Costes</h3>
+  <div class="linea">
+  <span>Subtotal</span>
+  <span>{{ subtotal() | number:'1.2-2' }} €</span>
+</div>
+    <div class="linea">
+  <span>Envío</span>
+  @if (envio() === 0) {
+    <span class="gratis">Gratis</span>
+  } @else {
+    <span>{{ envio() | number:'1.2-2' }} €</span>
+  }
+</div>
+  </div>
+  <hr />
+  <div class="linea total">
+  <span>Total</span>
+  <span>{{ total() | number:'1.2-2' }} €</span>
+</div>
+  <button class="btn-finalizar" (click)="finalizar.emit()" [disabled]="cargando() || subtotal() === 0">
+    @if (cargando()) { Procesando... } @else { Finalizar Pedido }
+  </button>
+

@@ -1,0 +1,271 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.8rem 2rem;
+  background: var(--color-azul);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.logo-img {
+  height: 48px;
+  width: auto;
+}
+
+.buscador {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-crema);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+}
+.buscador input {
+  border: none;
+  background: none;
+  outline: none;
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--color-azul);
+}
+.buscador .material-symbols-outlined {
+  color: var(--color-gris-medio);
+}
+
+.enlaces {
+  display: flex;
+  gap: 1.2rem;
+}
+.enlaces a {
+  text-decoration: none;
+  color: var(--color-crema);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+.enlaces a:hover {
+  color: var(--color-morado);
+}
+
+.iconos {
+  display: flex;
+  gap: 1.2rem;
+}
+.icono {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--color-crema);
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.icono-texto {
+  font-size: 0.7rem;
+}
+
+/* Hover de cada icono con su color */
+.icono-favoritos:hover {
+  color: var(--color-rosa);
+}
+.icono-cuenta:hover {
+  color: var(--color-turquesa);
+}
+.icono-carrito:hover {
+  color: var(--color-morado);
+}
+
+.icono-carrito .badge {
+  position: absolute;
+  top: -6px;
+  right: 2px;
+  background: var(--color-morado);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CAJÓN LATERAL (igual que antes) */
+.drawer-fondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 998;
+}
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px;
+  max-width: 90vw;
+  height: 100vh;
+  background: var(--color-blanco);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Montserrat', sans-serif;
+  animation: deslizar 0.25s ease;
+}
+@keyframes deslizar {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.drawer-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem;
+  border-bottom: 1px solid #eee;
+}
+.drawer-cabecera h2 {
+  font-size: 1.2rem;
+  color: var(--color-azul);
+  margin: 0;
+}
+.drawer-cerrar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-gris-medio);
+}
+.drawer-vacio {
+  text-align: center;
+  color: var(--color-gris-medio);
+  padding: 3rem 1rem;
+}
+.drawer-lista {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+.drawer-item {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #f3f3f3;
+}
+.drawer-item img {
+  width: 45px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.drawer-item-info {
+  flex: 1;
+}
+.drawer-titulo {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-azul);
+  margin: 0 0 0.2rem;
+}
+.drawer-detalle {
+  font-size: 0.8rem;
+  color: var(--color-gris-medio);
+  margin: 0;
+}
+.drawer-eliminar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-rosa);
+}
+.drawer-pie {
+  padding: 1.2rem;
+  border-top: 1px solid #eee;
+}
+.drawer-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--color-azul);
+}
+.drawer-total strong {
+  color: var(--color-morado);
+}
+.drawer-btn-ver {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid var(--color-morado);
+  color: var(--color-morado);
+  padding: 0.6rem;
+  border-radius: 8px;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+}
+.drawer-btn-finalizar {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  background: var(--color-morado);
+  color: #fff;
+  padding: 0.7rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* esto lo necesito para que el scroll sea suave en novedades y no se tape con el navbar) */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+.cuenta-wrapper {
+  position: relative;
+  display: flex;
+}
+.cuenta-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  min-width: 180px;
+  background: var(--color-crema);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1000;
+}
+.cuenta-menu a,
+.cuenta-menu button {
+  padding: 12px 16px;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--color-azul);
+  text-decoration: none;
+  font: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.cuenta-menu a:hover,
+.cuenta-menu button:hover {
+  background: var(--color-turquesa);
+}

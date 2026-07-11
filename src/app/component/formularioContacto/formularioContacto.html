@@ -1,0 +1,45 @@
+<form class="formulario-contacto" (ngSubmit)="enviarFormulario()">
+    <div class="row g-3">
+        <div class="col-12 col-md-6">
+            <label>Nombre</label>
+            <input type="text" class="form-control" name="nombre" [(ngModel)]="formulario.nombre" required
+                placeholder="Tu nombre de protagonista" />
+        </div>
+
+        <div class="col-12 col-md-6">
+            <label>Email</label>
+            <input type="email" class="form-control" name="email" [(ngModel)]="formulario.email" required
+                placeholder="tuemail@email.com" />
+        </div>
+
+        <div class="col-12">
+            <label>Asunto</label>
+            <input type="text" class="form-control" name="asunto" [(ngModel)]="formulario.asunto" required
+                placeholder="¿Qué capítulo necesitas abrir?" />
+        </div>
+
+        <div class="col-12">
+            <label>Mensaje</label>
+            <textarea class="form-control" name="mensaje" rows="5" [(ngModel)]="formulario.mensaje" required
+                placeholder="Cuéntanos tu misión lectora..."></textarea>
+        </div>
+
+        <div class="col-12">
+            <button class="btn formulario-contacto__btn" type="submit" [disabled]="enviando()">
+                @if (enviando()) {
+                Enviando pergamino...
+                } @else {
+                Enviar mensaje
+                }
+            </button>
+        </div>
+
+        @if (mensajeRespuesta()) {
+        <p class="formulario-contacto__ok">{{ mensajeRespuesta() }}</p>
+        }
+
+        @if (error()) {
+        <p class="formulario-contacto__error">{{ error() }}</p>
+        }
+    </div>
+</form>

@@ -1,0 +1,191 @@
+/**
+ * Bloque principal del newsletter.
+ * Lo hacemos tipo tarjeta llamativa para poder usarlo luego dentro del footer.
+ */
+.newsletter {
+  position: relative;
+  overflow: hidden;
+
+  padding: 2.5rem;
+  border-radius: 1.75rem;
+
+  background-color: var(--color-azul);
+  color: var(--color-blanco);
+
+  box-shadow: 0 18px 40px rgb(31 42 68 / 18%);
+}
+
+/**
+ * Círculos decorativos usando colores de marca.
+ */
+.newsletter::before,
+.newsletter::after {
+  content: '';
+  position: absolute;
+  border-radius: 999px;
+  opacity: 0.18;
+}
+
+.newsletter::before {
+  width: 180px;
+  height: 180px;
+  top: -70px;
+  right: -60px;
+  background-color: var(--color-amarillo);
+}
+
+.newsletter::after {
+  width: 140px;
+  height: 140px;
+  bottom: -60px;
+  left: -50px;
+  background-color: var(--color-turquesa);
+}
+
+/**
+ * Para que el contenido quede por encima de los círculos decorativos.
+ */
+.newsletter > * {
+  position: relative;
+  z-index: 1;
+}
+
+.newsletter__eyebrow {
+  margin-bottom: 0.5rem;
+
+  color: var(--color-amarillo);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.newsletter h2 {
+  max-width: 620px;
+  margin-bottom: 0.75rem;
+
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.newsletter__texto {
+  max-width: 620px;
+  margin-bottom: 1.5rem;
+
+  color: var(--color-gris-claro);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.newsletter__form {
+  display: flex;
+  gap: 0.75rem;
+
+  max-width: 620px;
+}
+
+.newsletter__form input {
+  flex: 1;
+
+  min-height: 52px;
+  padding: 0 1.25rem;
+  border: 2px solid var(--color-blanco);
+  border-radius: 999px;
+
+  background-color: var(--color-blanco);
+  color: var(--color-azul);
+
+  font: inherit;
+  font-weight: 600;
+  outline: none;
+}
+
+.newsletter__form input::placeholder {
+  color: var(--color-gris-medio);
+}
+
+.newsletter__form input:focus {
+  border-color: var(--color-amarillo);
+}
+
+.newsletter__form button {
+  min-height: 52px;
+  padding: 0 1.6rem;
+  border: none;
+  border-radius: 999px;
+
+  background-color: var(--color-morado);
+  color: var(--color-blanco);
+
+  font: inherit;
+  font-weight: 800;
+
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.newsletter__form button:hover {
+  transform: translateY(-2px);
+  background-color: var(--color-rosa);
+  box-shadow: 0 10px 24px rgb(255 77 109 / 24%);
+}
+
+.newsletter__form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.newsletter__mensaje {
+  max-width: 620px;
+  margin-top: 1rem;
+
+  color: var(--color-amarillo);
+  font-weight: 700;
+}
+
+/**
+ * Responsive para móvil.
+ */
+@media (max-width: 650px) {
+  .newsletter {
+    padding: 2rem 1.25rem;
+    border-radius: 1.25rem;
+  }
+
+  .newsletter__form {
+    flex-direction: column;
+  }
+
+  .newsletter__form button {
+    width: 100%;
+  }
+}
+
+/**
+ * Variante compacta del newsletter.
+ *
+ * Usamos el mismo componente para el Home y el Footer.
+ * Así no duplicamos código y demostramos reutilización.
+ */
+.newsletter--compact {
+  padding: 2rem;
+}
+
+.newsletter--compact h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+.newsletter--compact .newsletter__texto {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.newsletter--compact .newsletter__form {
+  max-width: 100%;
+}

@@ -1,0 +1,14 @@
+<div class="orders-container">
+  <h1>Mis Pedidos</h1>
+  @if (cargando()) {
+    <p class="estado">Cargando pedidos...</p>
+  } @else if (pedidos().length === 0) {
+    <p class="estado">Todavía no has hecho ningún pedido.</p>
+  } @else {
+    <div class="orders-lista">
+      @for (pedido of pedidos(); track pedido.id) {
+        <app-order-card [pedido]="pedido" />
+      }
+    </div>
+  }
+</div>

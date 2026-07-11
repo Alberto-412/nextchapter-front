@@ -1,0 +1,220 @@
+<!--
+  ============================================================
+  QUÉ HACE: Vista del dashboard. Tiene tres bloques:
+            1. Tarjetas de estadísticas
+            2. Lista de pedidos recientes (con paginación)
+            3. Usuarios pendientes de validación
+  ============================================================
+-->
+<div class="dashboard">
+
+    <div class="page-header">
+        <div>
+            <h1>Dashboard</h1>
+            <p>Panel de administración de NextChapter</p>
+        </div>
+    </div>
+
+    <!-- Error global si falla la carga del backend -->
+    @if (error()) {
+    <p class="msg-error">{{ error() }}</p>
+    }
+
+    <!-- ── BLOQUE 1: ESTADÍSTICAS ───────────────────────────
+         Solo se muestran cuando stats() no es null (ya cargó el back).
+         hide-on-search → clase CSS que oculta las stats cuando
+         el usuario está buscando (para no confundir).
+         | number:'1.2-2' → pipe de Angular que formatea el número
+         con mínimo 1 dígito entero y exactamente 2 decimales.
+    ─────────────────────────────────────────────────────── -->
+    @if (stats()) {
+    <div class="stats-grid" [class.hide-on-search]="busquedaService.termino() !== ''">
+        <div class="stat-card">
+            <div class="stat-icon purple"><span class="material-symbols-outlined">shopping_bag</span></div>
+            <div class="stat-info">
+                <span class="stat-label">Pedidos totales</span>
+                <span class="stat-value">{{ stats().total_pedidos }}</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon green"><span class="material-symbols-outlined">check_circle</span></div>
+            <div class="stat-info">
+                <span class="stat-label">Pedidos entregados</span>
+                <span class="stat-value">{{ stats().entregados }}</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon orange"><span class="material-symbols-outlined">local_shipping</span></div>
+            <div class="stat-info">
+                <span class="stat-label">Envíos en proceso</span>
+                <span class="stat-value">{{ stats().en_proceso }}</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon red"><span class="material-symbols-outlined">cancel</span></div>
+            <div class="stat-info">
+                <span class="stat-label">Cancelados</span>
+                <span class="stat-value">{{ stats().cancelados }}</span>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon teal"><span class="material-symbols-outlined">euro</span></div>
+            <div class="stat-info">
+                <span class="stat-label">Ingresos totales</span>
+                <span class="stat-value">{{ stats().ingresos_totales | number:'1.2-2' }} €</span>
+            </div>
+        </div>
+    </div>
+    }
+
+    <!-- ── BLOQUE 2: PEDIDOS RECIENTES ─────────────────────
+         Alterna entre:
+         · Vista de lista (tabla + paginación)
+         · Vista de detalle (datos del pedido seleccionado)
+         El signal pedidoSeleccionado() controla cuál se muestra.
+    ─────────────────────────────────────────────────────── -->
+    <div class="card">
+        <div class="card-header">
+            <h2>Pedidos Recientes</h2>
+        </div>
+
+        <!-- LISTA: visible cuando NO hay pedido seleccionado -->
+        @if (!pedidoSeleccionado()) {
+
+        <!-- Solo mostramos la tabla si hay resultados o no hay búsqueda activa -->
+        @if (pedidosFiltrados().length > 0 || busquedaService.termino() === '') {
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Pedido</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Total</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- @for → control flow moderno (Angular 17+).
+                         track pedido.id → ayuda a Angular a identificar
+                         cada fila de forma única para optimizar los re-renders. -->
+                @for (pedido of pedidosPaginados(); track pedido.id) {
+                <tr>
+                    <td class="pedido-id">#{{ pedido.id }}</td>
+                    <td>
+                        <div class="cliente-cell">
+                            <!-- Inicial del nombre como avatar -->
+                            <div class="avatar">{{ pedido.cliente ? pedido.cliente[0] : '?' }}</div>
+                            <div>
+                                <span class="cliente-nombre">{{ pedido.cliente }}</span>
+                                <span class="cliente-mail">{{ pedido.mail }}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ pedido.fecha_pedido | date:'dd/MM/yy HH:mm' }}</td>
+                    <!-- [class]="pedido.estado" → aplica la clase CSS con
+                               el nombre del estado (ej: class="pendiente") para
+                               que el CSS lo coloree diferente según el estado. -->
+                    <td><span class="badge" [class]="pedido.estado">{{ pedido.estado }}</span></td>
+                    <td>{{ pedido.total }} €</td>
+                    <td>
+                        <!-- verPedido() pasa el objeto entero (no solo el ID)
+                                   porque el dashboard no hace petición extra al back. -->
+                        <button class="btn-ver-pedido" (click)="verPedido(pedido)" title="Ver detalle">
+                            <span class="material-symbols-outlined">visibility</span>
+                        </button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- PAGINACIÓN: botones anterior, numerados y siguiente.
+                 [].constructor(n) crea un array de n elementos para
+                 iterar con @for y generar los botones numerados. -->
+        <div class="paginacion">
+            <div class="paginacion-btns">
+                <button class="pag-btn" [class.disabled]="paginaActual() === 1" (click)="irAPagina(paginaActual() - 1)">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                @for (p of [].constructor(totalPaginas()); track $index) {
+                <button class="pag-btn" [class.active]="paginaActual() === $index + 1"
+                    (click)="irAPagina($index + 1)">{{ $index + 1 }}</button>
+                }
+                <button class="pag-btn" [class.disabled]="paginaActual() === totalPaginas()"
+                    (click)="irAPagina(paginaActual() + 1)">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+            </div>
+        </div>
+        }
+
+        <!-- Sin resultados de búsqueda -->
+        @if (pedidosFiltrados().length === 0 && busquedaService.termino() !== '') {
+        <p class="empty">No se encontraron pedidos para "{{ busquedaService.termino() }}"</p>
+        }
+        }
+
+        <!-- DETALLE: visible cuando hay un pedido seleccionado -->
+        @if (pedidoSeleccionado()) {
+        <div class="detalle-pedido">
+            <div class="detalle-header">
+                <!-- cerrarDetalle() pone pedidoSeleccionado a null → vuelve a la lista -->
+                <button class="btn-back" (click)="cerrarDetalle()">← Volver a pedidos</button>
+                <div class="detalle-title">
+                    <h3>Pedido #{{ pedidoSeleccionado().id }}</h3>
+                    <span class="badge" [class]="pedidoSeleccionado().estado">{{ pedidoSeleccionado().estado }}</span>
+                </div>
+            </div>
+            <div class="detalle-info">
+                <div class="info-row"><span class="info-label">Cliente</span><span class="info-value">{{
+                        pedidoSeleccionado().cliente }}</span></div>
+                <div class="info-row"><span class="info-label">Email</span><span class="info-value">{{
+                        pedidoSeleccionado().mail }}</span></div>
+                <div class="info-row"><span class="info-label">Dirección de envío</span><span class="info-value">{{
+                        pedidoSeleccionado().direccion_envio }}</span></div>
+                <div class="info-row"><span class="info-label">Método de pago</span><span class="info-value">{{
+                        pedidoSeleccionado().metodo_pago }}</span></div>
+                <div class="info-row"><span class="info-label">Total</span><span class="info-value total">{{
+                        pedidoSeleccionado().total }} €</span></div>
+            </div>
+        </div>
+        }
+    </div>
+
+    <!-- ── BLOQUE 3: USUARIOS PENDIENTES ───────────────────
+         Filtrados por el buscador compartido (BusquedaService).
+    ─────────────────────────────────────────────────────── -->
+    <div class="card">
+        <div class="card-header">
+            <h2>Validación de Usuarios</h2>
+            <!-- Badge con el contador de pendientes -->
+            @if (usuariosPendientes().length > 0) {
+            <span class="badge-count">{{ usuariosPendientes().length }} nuevos</span>
+            }
+        </div>
+
+        @if (usuariosPendientesFiltrados().length === 0 && busquedaService.termino() === '') {
+        <p class="empty">No hay usuarios pendientes de validación</p>
+        }
+        @if (usuariosPendientesFiltrados().length === 0 && busquedaService.termino() !== '') {
+        <p class="empty">No se encontraron usuarios para "{{ busquedaService.termino() }}"</p>
+        }
+
+        @for (usuario of usuariosPendientesFiltrados(); track usuario.id) {
+        <div class="user-row">
+            <div class="user-avatar">{{ usuario.nombre ? usuario.nombre[0] : '?' }}</div>
+            <div class="user-info">
+                <span class="user-name">{{ usuario.nombre }}</span>
+                <span class="user-mail">{{ usuario.mail }}</span>
+            </div>
+            <div class="user-actions">
+                <button class="btn-aprobar" (click)="validarUsuario(usuario.id)">Aprobar</button>
+                <!-- Rechazar sin implementar aún en el backend -->
+                <button class="btn-rechazar">Rechazar</button>
+            </div>
+        </div>
+        }
+    </div>
+
+</div>

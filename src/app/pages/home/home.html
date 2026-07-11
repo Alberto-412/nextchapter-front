@@ -1,0 +1,185 @@
+<section class="home">
+
+
+
+    <!-- BANNER PRINCIPAL -->
+    <section class="home__banner">
+        <!-- La imagen está dentro de public, por eso se llama directamente con / -->
+        <img src="/banner_home_nc.png" alt="Banner principal de NextChapter" />
+    </section>
+
+    <!-- CTA PRINCIPAL -->
+    <section class="home__cta">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-12 col-lg-9">
+
+                    <p class="home__eyebrow">
+                        Modo lector activado
+                    </p>
+
+                    <h1>
+                        Elige sabiamente. Toda gran aventura empieza con un libro.
+                    </h1>
+
+                    <p class="home__texto">
+                        Cada libro es una puerta a un universo diferente. Descubre nuevas historias, conoce personajes
+                        inolvidables y encuentra
+                        tu próxima gran aventura entre miles de páginas esperando ser exploradas.
+                    </p>
+
+                    <a routerLink="/catalogo" class="home__btn">
+                        Ver libros
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BENEFICIOS NEXTCHAPTER -->
+    <section class="home__features">
+
+        <div class="container">
+
+            <div class="row g-4">
+
+                <div class="col-12 col-md-4">
+
+                    <article class="home__feature">
+
+                        <span class="material-symbols-outlined home__feature-icon home__feature-icon--morado">
+                            auto_stories
+                        </span>
+
+                        <h3>
+                            Mundos por descubrir
+                        </h3>
+
+                        <p>
+                            Fantasía, ciencia ficción, romance, manga y aventuras
+                            esperando a encontrar un hueco en tu estantería.
+                        </p>
+
+                    </article>
+
+                </div>
+
+                <div class="col-12 col-md-4">
+
+                    <article class="home__feature">
+
+                        <span class="material-symbols-outlined home__feature-icon home__feature-icon--rosa">
+                            local_library
+                        </span>
+
+                        <h3>
+                            Catálogo en expansión
+                        </h3>
+
+                        <p>
+                            Nuevos títulos aparecen constantemente para que nunca
+                            te quedes sin una nueva misión lectora.
+                        </p>
+
+                    </article>
+
+                </div>
+
+                <div class="col-12 col-md-4">
+
+                    <article class="home__feature">
+
+                        <span class="material-symbols-outlined home__feature-icon home__feature-icon--turquesa">
+                            rocket_launch
+                        </span>
+
+                        <h3>
+                            Despega hacia tu siguiente capítulo
+                        </h3>
+
+                        <p>
+                            Encuentra rápidamente tu próxima aventura usando
+                            filtros, categorías y búsquedas inteligentes.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- NOVEDADES -->
+    <!-- qui estoy añadiendo una id porque lo necesito cómo un eespecie de ancla porque en header cuando le hagan clkick a novedades quiero que baje en el mismo home hasta el apartado novedades -->
+    <section id="novedades" class="home__novedades">
+        <div class="container">
+
+            <div class="row justify-content-center text-center mb-4">
+                <div class="col-12 col-lg-8">
+
+                    <p class="home__eyebrow">
+                        Novedades
+                    </p>
+
+                    <h2>
+                        Recién invocados a la estantería
+                    </h2>
+
+                    <p class="home__texto">
+                        Nuevas aventuras, nuevos mundos y personajes esperando a ser descubiertos.
+                    </p>
+
+                </div>
+            </div>
+
+            <!-- Carrusel horizontal de portadas -->
+            @if (novedades().length > 0) {
+
+            <div class="home__slider-wrapper">
+
+                <button type="button" class="home__slider-btn" aria-label="Ver libros anteriores"
+                    (click)="scrollIzquierda()">
+
+                    ‹
+
+                </button>
+
+                <div #slider class="home__slider">
+
+                    @for (libro of novedades(); track libro.id) {
+
+                    <a [routerLink]="['/libros', libro.id]" class="home__portada">
+
+                        <img [src]="libro.imagen" [alt]="libro.titulo" />
+
+                    </a>
+
+                    }
+
+                </div>
+
+                <button type="button" class="home__slider-btn" aria-label="Ver más libros" (click)="scrollDerecha()">
+
+                    ›
+
+                </button>
+
+            </div>
+
+            } @else {
+
+            <p class="home__empty">
+                Todavía no hay novedades cargadas. El dragón del backend está dormido.
+            </p>
+
+            }
+
+        </div>
+    </section>
+
+
+</section>
+<app-footer></app-footer>

@@ -1,0 +1,4 @@
+.orders-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; font-family: 'Montserrat', sans-serif; }
+.orders-container h1 { color: var(--color-azul); margin-bottom: 1.5rem; }
+.estado { text-align: center; color: var(--color-gris-medio); padding: 3rem 0; }
+.orders-lista { display: flex; flex-direction: column; gap: 1rem; }

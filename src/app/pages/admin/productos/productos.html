@@ -1,0 +1,433 @@
+<!-- LISTA DE PRODUCTOS -->
+<div class="productos">
+    <div class="page-header">
+        <div>
+            <h1>Gestión de Productos</h1>
+            <p>Administra el catálogo de libros de NextChapter</p>
+        </div>
+        <button class="btn-primary" (click)="mostrarFormularioCreacion()" [disabled]="isLoading()">
+            <span class="material-symbols-outlined">add</span>
+            Crear Producto
+        </button>
+    </div>
+
+    <!-- MENSAJES -->
+    @if (mensaje()) {
+    <div class="card" style="background: #ecfdf5; border-left: 4px solid var(--color-turquesa);">
+        <p class="msg-ok">✓ {{ mensaje() }}</p>
+    </div>
+    }
+    @if (error()) {
+    <div class="card" style="background: #fef2f2; border-left: 4px solid var(--color-rosa);">
+        <p class="msg-error">✕ {{ error() }}</p>
+    </div>
+    }
+
+    <!-- TABLA DESKTOP -->
+    @if (!modoCreacion() && !modoEdicion()) {
+    <div class="card tabla-desktop">
+        @if (isLoading()) {
+        <div style="text-align: center; padding: 40px; color: #9ca3af;">
+            <p>Cargando productos...</p>
+        </div>
+        }
+        @if (!isLoading() && productos().length > 0) {
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Categoría</th>
+                    <th>Editorial</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (producto of productosEnPagina(); track producto.id) {
+                <tr>
+                    <td>
+                        <div class="producto-cell">
+                            @if (producto.imagen) {
+                            <img [src]="producto.imagen" [alt]="producto.titulo" class="producto-img" />
+                            } @else {
+                            <div class="producto-img-placeholder">
+                                <span class="material-symbols-outlined">image</span>
+                            </div>
+                            }
+                            <div>
+                                <span class="producto-titulo">{{ producto.titulo }}</span>
+                                <span class="producto-isbn">{{ producto.descripcion | slice:0:50 }}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ producto.categorias || '-' }}</td>
+                    <td>{{ producto.editorial || '-' }}</td>
+                    <td>${{ producto.precio }}</td>
+                    <td [class.stock-bajo]="producto.stock < 5">{{ producto.stock }}</td>
+                    <td class="acciones">
+                        <button class="btn-icon" (click)="editarProducto(producto.id)" [disabled]="isLoading()"
+                            title="Editar">
+                            <span class="material-symbols-outlined">edit</span>
+                        </button>
+                        <button class="btn-icon danger" (click)="eliminarProducto(producto.id)" [disabled]="isLoading()"
+                            title="Eliminar">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- PAGINACIÓN TABLA -->
+        @if (totalPaginas() > 1) {
+        <div class="pagination-controls">
+            <button (click)="paginaAnterior()" [disabled]="paginaActual() === 1" class="pagination-btn">
+                <span _ngcontent-ng-c2706608894="" class="material-symbols-outlined">chevron_left</span>
+            </button>
+
+            @for (pagina of paginasArray(); track pagina) {
+            <button (click)="irAPagina(pagina)" [class.active]="paginaActual() === pagina" class="pagination-btn">
+                {{ pagina }}
+            </button>
+            }
+
+            <button (click)="paginaSiguiente()" [disabled]="paginaActual() === totalPaginas()" class="pagination-btn">
+                <span _ngcontent-ng-c2706608894="" class="material-symbols-outlined">chevron_right</span>
+            </button>
+
+            <span class="pagination-info">Página {{ paginaActual() }} de {{ totalPaginas() }}</span>
+        </div>
+        }
+        }
+        @if (!isLoading() && productos().length === 0) {
+        <div style="text-align: center; padding: 40px; color: #9ca3af;">
+            <p>No hay productos registrados</p>
+        </div>
+        }
+    </div>
+
+    <!-- LISTA MÓVIL -->
+    <div class="lista-mobile">
+        @for (producto of productosEnPagina(); track producto.id) {
+        <div class="producto-card">
+            @if (producto.imagen) {
+            <div class="producto-card-img">
+                <img [src]="producto.imagen" [alt]="producto.titulo" />
+            </div>
+            } @else {
+            <div class="producto-img-placeholder grande">
+                <span class="material-symbols-outlined">image</span>
+            </div>
+            }
+            <div class="producto-card-info">
+                <span class="producto-titulo">{{ producto.titulo }}</span>
+                <div class="producto-card-meta">
+                    <div class="info-chip">
+                        <span class="chip-label">Precio:</span>${{ producto.precio }}
+                    </div>
+                    <div class="info-chip">
+                        <span class="chip-label">Stock:</span>{{ producto.stock }}
+                    </div>
+                </div>
+                <div class="acciones" style="margin-top: 8px;">
+                    <button class="btn-icon" (click)="editarProducto(producto.id)" [disabled]="isLoading()">
+                        <span class="material-symbols-outlined">edit</span>
+                    </button>
+                    <button class="btn-icon danger" (click)="eliminarProducto(producto.id)" [disabled]="isLoading()">
+                        <span class="material-symbols-outlined">delete</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+
+        <!-- PAGINACIÓN MOBILE -->
+        @if (totalPaginas() > 1) {
+        <div class="pagination-controls">
+            <button (click)="paginaAnterior()" [disabled]="paginaActual() === 1" class="pagination-btn">
+                <span _ngcontent-ng-c2706608894="" class="material-symbols-outlined">chevron_left</span>
+            </button>
+
+            @for (pagina of paginasArray(); track pagina) {
+            <button (click)="irAPagina(pagina)" [class.active]="paginaActual() === pagina" class="pagination-btn">
+                {{ pagina }}
+            </button>
+            }
+
+            <button (click)="paginaSiguiente()" [disabled]="paginaActual() === totalPaginas()" class="pagination-btn">
+                <span _ngcontent-ng-c2706608894="" class="material-symbols-outlined">chevron_right</span>
+            </button>
+
+            <span class="pagination-info">Página {{ paginaActual() }} de {{ totalPaginas() }}</span>
+        </div>
+        }
+    </div>
+    }
+
+    <!-- FORMULARIO CREACIÓN -->
+    @if (modoCreacion()) {
+    <div class="card">
+        <div class="card-header">
+            <h2>Crear Nuevo Producto</h2>
+        </div>
+
+        <form [formGroup]="formularioCreacion" (ngSubmit)="crearProducto()" class="form-grid">
+            <div>
+                <div class="form-section">
+                    <h3>Información Básica</h3>
+                    <div class="form-group">
+                        <label>Título *</label>
+                        <input type="text" formControlName="titulo" placeholder="Escribe el título del libro" />
+                        @if (formularioCreacion.get('titulo')?.invalid && formularioCreacion.get('titulo')?.touched) {
+                        <small class="msg-error">El título es obligatorio</small>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>Autor</label>
+                        <select formControlName="autores">
+                            <option value="">Selecciona un autor</option>
+                            @for (autor of autores(); track autor.nombre) {
+                            <option [value]="autor.nombre">{{ autor.nombre }}</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ISBN</label>
+                        <input type="text" formControlName="isbn" placeholder="Código ISBN" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descripción / Sinopsis</label>
+                        <textarea formControlName="descripcion" placeholder="Escribe una breve sinopsis..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Clasificación</h3>
+                    <div class="form-group">
+                        <label>Editorial</label>
+                        <select formControlName="editorial">
+                            <option value="">Selecciona una editorial</option>
+                            @for (editorial of editoriales(); track editorial.nombre) {
+                            <option [value]="editorial.nombre">{{ editorial.nombre }}</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Categoría</label>
+                        <select formControlName="categorias">
+                            <option value="">Selecciona una categoría</option>
+                            @for (categoria of categorias(); track categoria.nombre) {
+                            <option [value]="categoria.nombre">{{ categoria.nombre }}</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Detalles</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Precio *</label>
+                            <input type="number" formControlName="precio" placeholder="0.00" step="0.01" />
+                            @if (formularioCreacion.get('precio')?.invalid && formularioCreacion.get('precio')?.touched)
+                            {
+                            <small class="msg-error">Precio obligatorio</small>
+                            }
+                        </div>
+
+                        <div class="form-group">
+                            <label>Stock *</label>
+                            <input type="number" formControlName="stock" placeholder="0" />
+                            @if (formularioCreacion.get('stock')?.invalid && formularioCreacion.get('stock')?.touched) {
+                            <small class="msg-error">Stock obligatorio</small>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Fecha Publicación</label>
+                            <input type="date" formControlName="fecha_publicacion" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Pre-reserva</label>
+                            <select formControlName="pre_reserva">
+                                <option [value]="0">No</option>
+                                <option [value]="1">Sí</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>URL de Imagen</label>
+                        <input type="text" formControlName="imagen" placeholder="https://ejemplo.com/imagen.jpg" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-sidebar">
+                <h3>Vista Previa</h3>
+                @if (formularioCreacion.get('imagen')?.value) {
+                <div class="imagen-preview">
+                    <img [src]="formularioCreacion.get('imagen')?.value" alt="portada" />
+                </div>
+                } @else {
+                <div class="imagen-preview">
+                    <div class="imagen-placeholder">
+                        <span class="material-symbols-outlined">image</span>
+                        <span>Sin imagen</span>
+                    </div>
+                </div>
+                }
+
+                <button type="submit" class="btn-primary full" [disabled]="isLoading() || formularioCreacion.invalid">
+                    <span class="material-symbols-outlined">check</span>
+                    Crear Producto
+                </button>
+                <button type="button" class="btn-secondary full" (click)="cerrar()" [disabled]="isLoading()">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+    }
+
+    <!-- FORMULARIO EDICIÓN -->
+    @if (modoEdicion()) {
+    <div class="card">
+        <div class="card-header">
+            <h2>Editar Producto</h2>
+        </div>
+
+        <form [formGroup]="formularioEdicion" (ngSubmit)="guardarProducto()" class="form-grid">
+            <div>
+                <div class="form-section">
+                    <h3>Información Básica</h3>
+                    <div class="form-group">
+                        <label>Título *</label>
+                        <input type="text" formControlName="titulo" placeholder="Escribe el título del libro" />
+                        @if (formularioEdicion.get('titulo')?.invalid && formularioEdicion.get('titulo')?.touched) {
+                        <small class="msg-error">El título es obligatorio</small>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>Autor *</label>
+                        <select formControlName="autores">
+                            <option value="">Selecciona un autor</option>
+                            @for (autor of autores(); track autor.nombre) {
+                            <option [value]="autor.nombre">{{ autor.nombre }}</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ISBN</label>
+                        <input type="text" formControlName="isbn" placeholder="Código ISBN" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descripción / Sinopsis</label>
+                        <textarea formControlName="descripcion"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Clasificación</h3>
+                    <div class="form-group">
+                        <label>Editorial</label>
+                        <select formControlName="editorial">
+                            <option value="">Selecciona una editorial</option>
+                            @for (editorial of editoriales(); track editorial.nombre) {
+                            <option [value]="editorial.nombre">{{ editorial.nombre }}</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Categoría</label>
+                        <select formControlName="categorias">
+                            <option value="">Selecciona una categoría</option>
+                            @for (categoria of categorias(); track categoria.nombre) {
+                            <option [value]="categoria.nombre">{{ categoria.nombre }}</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Detalles</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Precio *</label>
+                            <input type="number" formControlName="precio" placeholder="0.00" step="0.01" />
+                            @if (formularioEdicion.get('precio')?.invalid && formularioEdicion.get('precio')?.touched) {
+                            <small class="msg-error">Precio obligatorio</small>
+                            }
+                        </div>
+
+                        <div class="form-group">
+                            <label>Stock *</label>
+                            <input type="number" formControlName="stock" placeholder="0" />
+                            @if (formularioEdicion.get('stock')?.invalid && formularioEdicion.get('stock')?.touched) {
+                            <small class="msg-error">Stock obligatorio</small>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Fecha Publicación</label>
+                            <input type="date" formControlName="fecha_publicacion" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Pre-reserva</label>
+                            <select formControlName="pre_reserva">
+                                <option [value]="0">No</option>
+                                <option [value]="1">Sí</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>URL de Imagen</label>
+                        <input type="text" formControlName="imagen" placeholder="https://ejemplo.com/imagen.jpg" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-sidebar">
+                <h3>Vista Previa</h3>
+                @if (formularioEdicion.get('imagen')?.value) {
+                <div class="imagen-preview">
+                    <img [src]="formularioEdicion.get('imagen')?.value" alt="portada" />
+                </div>
+                } @else {
+                <div class="imagen-preview">
+                    <div class="imagen-placeholder">
+                        <span class="material-symbols-outlined">image</span>
+                        <span>Sin imagen</span>
+                    </div>
+                </div>
+                }
+
+                <button type="submit" class="btn-primary full" [disabled]="isLoading() || formularioEdicion.invalid">
+                    <span class="material-symbols-outlined">check</span>
+                    Guardar Cambios
+                </button>
+                <button type="button" class="btn-secondary full" (click)="cerrar()" [disabled]="isLoading()">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+    }
+</div>

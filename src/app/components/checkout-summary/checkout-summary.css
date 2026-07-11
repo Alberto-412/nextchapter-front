@@ -1,0 +1,20 @@
+.resumen {
+  background: var(--color-blanco);
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  font-family: 'Montserrat', sans-serif;
+}
+.resumen h3 { color: var(--color-azul); margin: 0 0 1rem; }
+.linea { display: flex; justify-content: space-between; margin-bottom: 0.7rem; color: var(--color-gris-oscuro); }
+.gratis { color: var(--color-turquesa); font-weight: 600; }
+.resumen hr { border: none; border-top: 1px solid #eee; margin: 1rem 0; }
+.linea.total { font-size: 1.3rem; font-weight: 700; color: var(--color-azul); }
+.btn-finalizar {
+  width: 100%; margin-top: 1.2rem;
+  background: var(--color-morado); color: #fff; border: none;
+  padding: 0.9rem; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer;
+}
+.btn-finalizar:hover:not(:disabled) { background: #6a3de8; }
+.btn-finalizar:disabled { opacity: 0.6; cursor: not-allowed; }

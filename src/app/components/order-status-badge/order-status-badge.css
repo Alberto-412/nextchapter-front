@@ -1,0 +1,14 @@
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  font-family: 'Montserrat', sans-serif;
+}
+.badge-pendiente  { background: rgba(255, 200, 61, 0.18);  color: #a87b00; }
+.badge-procesando { background: rgba(124, 77, 255, 0.12); color: var(--color-morado); }
+.badge-enviado    { background: rgba(46, 196, 182, 0.15); color: #178b80; }
+.badge-entregado  { background: rgba(46, 196, 182, 0.22); color: #0f6b62; }
+.badge-cancelado  { background: rgba(255, 77, 109, 0.12); color: var(--color-rosa); }

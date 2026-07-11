@@ -1,0 +1,197 @@
+<!-- Si está cargando mostramos un mensaje -->
+@if (cargando()) {
+<p class="text-center py-5">
+    Cargando libro...
+</p>
+}
+
+<!-- Si ocurre un error mostramos el mensaje -->
+@if (error()) {
+<p class="text-center py-5 text-danger">
+    {{ error() }}
+</p>
+}
+
+<!-- Cuando tenemos el libro mostramos toda la ficha -->
+@if (libro(); as libro) {
+
+<section class="libro-detalle container py-4">
+
+    <!-- Volver al catálogo -->
+    <a routerLink="/catalogo" class="text-decoration-none fw-bold libro-detalle__volver">
+        ← Volver al catálogo
+    </a>
+
+    <div class="row g-4 mt-2 align-items-start">
+
+        <!-- Imagen -->
+        <div class="col-lg-3">
+
+            <div class="libro-detalle__imagen-wrapper">
+
+                <img [src]="libro.imagen" [alt]="libro.titulo" class="libro-detalle__imagen" />
+
+            </div>
+
+        </div>
+
+        <!-- Información -->
+        <div class="col-lg-8 libro-detalle__info">
+
+            <!-- Breadcrumb -->
+            <nav class="libro-detalle__breadcrumb" aria-label="breadcrumb">
+                <span>Catálogo</span>
+                <span class="mx-2">/</span>
+                <span>{{ libro.categorias || 'Libros' }}</span>
+            </nav>
+
+            <!-- Datos principales -->
+            <div class="libro-detalle__header">
+
+                <h1 class="libro-detalle__titulo">
+                    {{ libro.titulo }}
+                </h1>
+
+                <p class="libro-detalle__autor">
+                    {{ libro.autores || 'Autor no disponible' }}
+                </p>
+
+                <p class="libro-detalle__editorial">
+                    {{ libro.editorial }} · ISBN {{ libro.isbn }}
+                </p>
+
+            </div>
+
+            <!-- Etiquetas -->
+            <div class="libro-detalle__tags">
+
+                <span class="badge libro-detalle__badge">
+                    {{ libro.categorias || 'Sin categoría' }}
+                </span>
+
+                @if (libro.stock > 0) {
+
+                <span class="badge libro-detalle__badge libro-detalle__badge--stock">
+                    Disponible
+                </span>
+
+                } @else {
+
+                <span class="badge libro-detalle__badge libro-detalle__badge--sin-stock">
+                    Sin stock
+                </span>
+
+                }
+
+            </div>
+
+            <!-- Sinopsis -->
+            <div class="libro-detalle__sinopsis">
+
+                <h3 class="libro-detalle__subtitulo">
+                    Sinopsis
+                </h3>
+
+                <p class="libro-detalle__descripcion">
+                    {{ libro.descripcion }}
+                </p>
+
+            </div>
+
+            <!-- Fecha -->
+            <p class="libro-detalle__fecha">
+                Publicado:
+                {{ libro.fecha_publicacion | date:'dd/MM/yyyy' }}
+            </p>
+
+            <!-- Compra -->
+            <div class="libro-detalle__compra">
+
+                <span class="libro-detalle__precio">
+                    {{ libro.precio }} €
+                </span>
+
+                <button type="button" class="btn libro-detalle__btn" [disabled]="libro.stock <= 0"
+                    (click)="agregarAlCarrito(libro)">
+                    Añadir al carrito
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+}
+
+<app-resenas-libro [resenas]="resenas()" />
+
+
+<!--
+  ════════════════════════════════════════════════════════
+  BLOQUE NUEVO: puntuar el libro y dejar una reseña.
+  Va fuera del @if (libro(); as libro) de arriba, así que
+  leemos el libro con la señal libro() directamente, igual
+  que ya hace <app-resenas-libro> con resenas().
+  ════════════════════════════════════════════════════════
+-->
+@if (libro()) {
+<section class="libro-detalle__resena-form">
+
+    <h2 class="libro-detalle__resena-form-titulo">
+        Cuéntanos qué te ha parecido
+    </h2>
+
+    <!-- Si no ha iniciado sesión: aviso con enlace al login -->
+    @if (!estaLogueado) {
+    <p class="libro-detalle__resena-form-aviso">
+        <a routerLink="/login">Inicia sesión</a> para puntuar este libro y dejar tu opinión.
+    </p>
+    }
+
+    <!-- Si ha iniciado sesión: formulario -->
+    @if (estaLogueado) {
+
+    @if (mensajeOkResena()) {
+    <p class="libro-detalle__resena-form-mensaje libro-detalle__resena-form-mensaje--ok">
+        {{ mensajeOkResena() }}
+    </p>
+    }
+    @if (errorResena()) {
+    <p class="libro-detalle__resena-form-mensaje libro-detalle__resena-form-mensaje--error">
+        {{ errorResena() }}
+    </p>
+    }
+
+    <!-- Puntuación: select simple, sin estrellas ni nada del
+             componente de tu compañera -->
+    <div class="libro-detalle__select-grupo">
+        <label class="libro-detalle__select-label" for="resena-calificacion">
+            Tu puntuación
+        </label>
+
+        <select id="resena-calificacion" class="libro-detalle__select-calificacion" [value]="calificacionSeleccionada()"
+            (change)="actualizarCalificacion($event)">
+            <option value="0">Selecciona una puntuación</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </div>
+
+    <textarea class="libro-detalle__resena-form-textarea" placeholder="Escribe tu opinión sobre el libro (opcional)"
+        [value]="comentarioNuevo()" (input)="actualizarComentario($event)">
+        </textarea>
+
+    <button type="button" class="btn libro-detalle__btn" [disabled]="enviandoResena()" (click)="enviarResena()">
+        {{ enviandoResena() ? 'Publicando...' : 'Publicar reseña' }}
+    </button>
+    }
+
+</section>
+}
+
+<app-footer></app-footer>

@@ -1,0 +1,277 @@
+/**
+ * Contenedor principal de la página.
+ *
+ * El ancho máximo evita que el contenido se estire demasiado
+ * en pantallas grandes.
+ */
+.librerias {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+/**
+ * Hero superior.
+ */
+.librerias__hero {
+  max-width: 900px;
+  margin: 0 auto 4rem;
+  text-align: center;
+}
+
+.librerias__eyebrow {
+  margin-bottom: 0.75rem;
+
+  color: var(--color-morado);
+
+  font-size: 0.85rem;
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.librerias h1 {
+  margin-bottom: 1rem;
+
+  color: var(--color-azul);
+
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.librerias__intro {
+  color: var(--color-gris-medio);
+  font-size: 1.08rem;
+  line-height: 1.8;
+}
+
+/**
+ * Separación inferior del grid.
+ *
+ * La estructura responsive la hace Bootstrap con row y col.
+ */
+.librerias__grid {
+  margin-bottom: 4rem;
+}
+
+/**
+ * Tarjeta de cada librería.
+ */
+.libreria-card {
+  height: 100%;
+  padding: 2rem;
+
+  border-radius: 1.5rem;
+
+  background-color: var(--color-blanco);
+
+  text-align: center;
+
+  box-shadow: 0 12px 30px rgb(31 42 68 / 8%);
+}
+
+.libreria-card__icon {
+  margin-bottom: 1rem;
+
+  color: var(--color-morado);
+
+  font-size: 3rem;
+
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.libreria-card h2 {
+  margin-bottom: 0.5rem;
+
+  color: var(--color-azul);
+
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.libreria-card__centro {
+  margin-bottom: 1rem;
+
+  color: var(--color-rosa);
+
+  font-weight: 800;
+}
+
+.libreria-card p {
+  color: var(--color-gris-medio);
+  line-height: 1.8;
+}
+
+.libreria-card__horario {
+  margin-top: 1rem;
+  font-weight: 700;
+}
+
+.libreria-card a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 1rem;
+  padding: 0.85rem 1.4rem;
+
+  border-radius: 999px;
+
+  background-color: var(--color-morado);
+  color: var(--color-blanco);
+
+  font-weight: 800;
+  text-decoration: none;
+
+  transition: all 0.2s ease;
+}
+
+.libreria-card a:hover {
+  background-color: var(--color-rosa);
+  color: var(--color-blanco);
+}
+
+/**
+ * Bloque donde mostramos el mapa.
+ */
+.librerias__mapa {
+  margin-bottom: 4rem;
+  padding: 3rem;
+
+  border-radius: 2rem;
+
+  background-color: var(--color-blanco);
+
+  box-shadow: 0 12px 30px rgb(31 42 68 / 8%);
+}
+
+.librerias__mapa-texto {
+  max-width: 760px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.librerias__mapa-texto h2 {
+  margin-bottom: 1rem;
+
+  color: var(--color-azul);
+
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.librerias__mapa-texto p {
+  color: var(--color-gris-medio);
+  line-height: 1.8;
+}
+
+/**
+ * Contenedor del iframe.
+ *
+ * Le ponemos overflow hidden para que el mapa respete
+ * el border-radius de la caja.
+ */
+.librerias__iframe {
+  overflow: hidden;
+
+  border-radius: 1.5rem;
+
+  box-shadow: 0 10px 25px rgb(31 42 68 / 10%);
+}
+
+.librerias__iframe iframe {
+  display: block;
+}
+
+/**
+ * Bloque final tipo llamada a la acción.
+ */
+.librerias__cta {
+  padding: 3rem;
+  border-radius: 2rem;
+
+  background-color: var(--color-azul);
+
+  text-align: center;
+}
+
+.librerias__cta-icon {
+  margin-bottom: 1rem;
+
+  color: var(--color-amarillo);
+
+  font-size: 3rem;
+
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.librerias__cta h2 {
+  margin-bottom: 1rem;
+
+  color: var(--color-blanco);
+
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.librerias__cta p {
+  max-width: 760px;
+  margin: 0 auto 1.5rem;
+
+  color: var(--color-gris-claro);
+  line-height: 1.8;
+}
+
+.librerias__cta a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1rem 1.75rem;
+
+  border-radius: 999px;
+
+  background-color: var(--color-amarillo);
+  color: var(--color-azul);
+
+  font-weight: 800;
+  text-decoration: none;
+
+  transition: all 0.2s ease;
+}
+
+.librerias__cta a:hover {
+  background-color: var(--color-rosa);
+  color: var(--color-blanco);
+}
+
+/**
+ * Responsive para móviles.
+ *
+ * Bootstrap ya controla las columnas, aquí solo ajustamos
+ * espacios internos para que no quede apretado.
+ */
+@media (max-width: 768px) {
+  .librerias {
+    padding: 3rem 1rem;
+  }
+
+  .librerias__mapa,
+  .librerias__cta {
+    padding: 2rem 1.25rem;
+  }
+
+  .librerias__iframe iframe {
+    height: 340px;
+  }
+}

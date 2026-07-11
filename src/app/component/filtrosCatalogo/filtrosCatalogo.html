@@ -1,0 +1,54 @@
+<aside class="filtros" aria-label="Filtros de catálogo">
+
+    <!-- filtrar los productos por categoría -->
+    <section class="filtros__grupo">
+        <h2>Categorías</h2>
+
+        <button type="button" class="filtros__opcion" [class.filtros__opcion--activa]="categoriaSeleccionada() === null"
+            (click)="seleccionarCategoria(null)">
+            Todos
+        </button>
+
+        @if (cargandoCategorias()) {
+        <p class="filtros__estado">Cargando categorías...</p>
+        } @else if (errorCategorias()) {
+        <p class="filtros__error" role="alert">
+            {{ errorCategorias() }}
+        </p>
+        } @else {
+        @for (categoria of categorias(); track categoria.id) {
+        <button type="button" class="filtros__opcion"
+            [class.filtros__opcion--activa]="categoriaSeleccionada() === categoria.id"
+            (click)="seleccionarCategoria(categoria.id)">
+            {{ categoria.nombre }}
+        </button>
+        }
+        }
+    </section>
+
+    <!-- Filtro para buscar productos dentro de un rango de precios -->
+    <section class="filtros__grupo">
+        <h2>Rango de precio</h2>
+
+
+        <label class="filtros__label" for="precioMin">
+            Precio mínimo
+        </label>
+
+
+        <input id="precioMin" class="filtros__input" type="number" min="0" placeholder="0" [value]="precioMin() ?? ''"
+            (input)="actualizarPrecioMin($event)" />
+
+
+        <label class="filtros__label" for="precioMax">
+            Precio máximo
+        </label>
+
+        <input id="precioMax" class="filtros__input" type="number" min="0" placeholder="33" [value]="precioMax() ?? ''"
+            (input)="actualizarPrecioMax($event)" />
+    </section>
+
+    <button type="button" class="filtros__limpiar" (click)="limpiarFiltros()">
+        Limpiar filtros
+    </button>
+</aside>

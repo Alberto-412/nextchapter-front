@@ -1,0 +1,55 @@
+<div class="perfil-container">
+  <h1 class="perfil-titulo">Mi Perfil</h1>
+
+  @if (mensaje) {
+  <p class="mensaje-ok">{{ mensaje }}</p>
+  }
+  @if (error) {
+  <p class="mensaje-error">{{ error }}</p>
+  }
+
+  <!-- DATOS DEL PERFIL -->
+  @if (perfil && !modoEdicion && !modoPassword) {
+  <div class="perfil-card">
+    <p class="perfil-dato"><strong>Nombre:</strong> {{ perfil.nombre }}</p>
+    <p class="perfil-dato"><strong>Email:</strong> {{ perfil.mail }}</p>
+    <p class="perfil-dato"><strong>Rol:</strong> {{ perfil.rol }}</p>
+
+    <div class="perfil-acciones">
+      <button class="btn btn-primario" (click)="editarPerfil()">Editar perfil</button>
+      <button class="btn btn-secundario" (click)="mostrarCambioPassword()">Cambiar contraseña</button>
+      <button class="btn btn-peligro" (click)="darDeBaja()">Darme de baja</button>
+    </div>
+  </div>
+  }
+
+  <!-- EDICIÓN DE PERFIL -->
+  @if (modoEdicion) {
+  <div class="perfil-card">
+    <h2 class="perfil-subtitulo">Editar perfil</h2>
+    <label class="perfil-label">Nombre</label>
+    <input class="perfil-input" [(ngModel)]="datosPerfil.nombre" />
+    <label class="perfil-label">Email</label>
+    <input class="perfil-input" [(ngModel)]="datosPerfil.mail" />
+    <div class="perfil-acciones">
+      <button class="btn btn-primario" (click)="guardarPerfil()">Guardar</button>
+      <button class="btn btn-secundario" (click)="cancelar()">Cancelar</button>
+    </div>
+  </div>
+  }
+
+  <!-- CAMBIO DE CONTRASEÑA -->
+  @if (modoPassword) {
+  <div class="perfil-card">
+    <h2 class="perfil-subtitulo">Cambiar contraseña</h2>
+    <label class="perfil-label">Contraseña actual</label>
+    <input class="perfil-input" type="password" [(ngModel)]="datosPassword.contrasenaActual" />
+    <label class="perfil-label">Contraseña nueva</label>
+    <input class="perfil-input" type="password" [(ngModel)]="datosPassword.contrasenaNueva" />
+    <div class="perfil-acciones">
+      <button class="btn btn-primario" (click)="cambiarPassword()">Guardar</button>
+      <button class="btn btn-secundario" (click)="cancelar()">Cancelar</button>
+    </div>
+  </div>
+  }
+</div>

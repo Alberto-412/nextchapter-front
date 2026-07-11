@@ -1,0 +1,236 @@
+/**
+ Problema detectado:
+ *
+ * Algunas portadas se veían mucho más grandes
+ * que otras al probar el responsive.
+ *
+ * Esto ocurría porque algunas imágenes tenían
+ * dimensiones originales muy distintas.
+ *
+ * Aunque la imagen tenía height: 250px,
+ * el contenedor del enlace no tenía una altura
+ * controlada y en determinados tamaños de pantalla
+ * el navegador podía mostrar comportamientos
+ * extraños.
+ *
+ * Solución:
+ *
+ * 1. Dar una altura fija al contenedor de la portada.
+ * 2. Ocultar cualquier parte sobrante.
+ * 3. Hacer que la imagen ocupe exactamente todo
+ *    el espacio disponible.
+ */
+
+/* TARJETA GENERAL */
+
+.libro-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  width: 100%;
+  /* Ancho max  para que todas las cards
+     mantengan una estructura parecida */
+  max-width: 260px;
+  height: 100%;
+
+  /* Altura mínima para que todas las cards
+     mantengan una estructura parecida */
+  min-height: 400px;
+
+  overflow: hidden;
+
+  border-radius: 0 0 1.5rem 1.5rem;
+
+  background-color: var(--color-blanco);
+
+  box-shadow: 0 8px 24px rgba(124, 77, 255, 0.1);
+}
+
+/* ENLACE DE LA PORTADA */
+
+.libro-card__imagen-link {
+  display: block;
+
+  /**
+   * Reservamos siempre el mismo espacio
+   * para la portada.
+   *
+   * Da igual si la imagen original mide:
+   * - 500x800
+   * - 1200x2000
+   * - 300x450
+   *
+   * Todas ocuparán exactamente este espacio.
+   */
+  height: 250px;
+
+  /**
+   * Si alguna imagen intenta salirse
+   * del contenedor, se recorta.
+   */
+  overflow: hidden;
+
+  text-decoration: none;
+}
+
+/* IMAGEN DE LA PORTADA */
+
+.libro-card__imagen {
+  display: block;
+
+  width: 100%;
+
+  /**
+   * La imagen ocupa toda la altura
+   * del contenedor anterior.
+   */
+  height: 100%;
+
+  /**
+   * cover rellena completamente el espacio.
+   *
+   * Puede recortar un poco los bordes
+   * pero todas las portadas quedan alineadas.
+   */
+  object-fit: cover;
+
+  background-color: var(--color-azul);
+}
+
+/* Hover suave sobre la portada */
+.libro-card__imagen-link:hover .libro-card__imagen {
+  opacity: 0.9;
+}
+
+/* CUERPO DE LA TARJETA */
+
+.libro-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  padding: 1.25rem 1.25rem 0.35rem;
+}
+
+/* VALORACIÓN*/
+
+.libro-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  margin: 0 0 1rem;
+
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.libro-card__estrellas {
+  color: var(--color-amarillo);
+}
+
+.libro-card__rating-numero,
+.libro-card__rating-total {
+  color: var(--color-gris-medio);
+}
+
+.libro-card__favorito {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--color-morado);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition:
+    transform 0.15s ease,
+    color 0.15s ease;
+}
+
+.libro-card__favorito:hover {
+  transform: scale(1.1);
+}
+
+.libro-card__favorito--activo {
+  color: var(--color-rosa);
+}
+/*INFORMACIÓN DEL LIBRO */
+
+.libro-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+
+.libro-card h2 {
+  margin: 0;
+
+  color: var(--color-azul);
+
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.libro-card__autor {
+  margin: 0;
+
+  color: var(--color-gris-medio);
+
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+/*ENLACE DEL TÍTULO */
+
+.libro-card__titulo-link {
+  color: var(--color-azul);
+  text-decoration: none;
+}
+
+.libro-card__titulo-link:hover {
+  color: var(--color-morado);
+}
+
+/*PRECIO */
+
+.libro-card__precio {
+  margin-top: auto;
+
+  padding-top: 1rem;
+
+  color: var(--color-rosa);
+
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+/*   
+   RESPONSIVE MÓVIL
+   
+   En pantallas pequeñas reducimos un poco
+   la altura de la portada para que entren
+   más tarjetas en pantalla y la navegación
+   sea más cómoda.
+*/
+
+@media (max-width: 576px) {
+  .libro-card {
+    min-height: 390px;
+  }
+
+  .libro-card__imagen-link {
+    height: 230px;
+  }
+}

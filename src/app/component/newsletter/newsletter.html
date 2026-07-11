@@ -1,0 +1,35 @@
+<section class="newsletter" [class.newsletter--compact]="compacto()">
+
+    <p class="newsletter__eyebrow">
+        Newsletter
+    </p>
+
+    <h2>
+        ¡Bienvenido, aventurero! Tu próxima misión llegará por correo.
+    </h2>
+
+    <p class="newsletter__texto">
+        Recibe novedades, recomendaciones y promociones exclusivas de NextChapter.
+    </p>
+
+    <form class="newsletter__form" (ngSubmit)="enviarNewsletter()">
+
+        <input type="email" name="mail" [(ngModel)]="mail" placeholder="Tu correo electrónico" required />
+
+        <button type="submit" [disabled]="cargando()">
+            @if(cargando()) {
+            Guardando...
+            } @else {
+            Unirme a la aventura
+            }
+        </button>
+
+    </form>
+
+    @if(mensaje()) {
+    <p class="newsletter__mensaje">
+        {{ mensaje() }}
+    </p>
+    }
+
+</section>

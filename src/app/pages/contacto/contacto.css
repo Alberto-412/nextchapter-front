@@ -1,0 +1,67 @@
+.contacto {
+  padding: 4rem 0;
+  background-color: var(--color-crema);
+}
+
+.contacto__eyebrow {
+  color: var(--color-morado);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.contacto h1 {
+  color: var(--color-azul);
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.contacto p {
+  color: var(--color-gris-medio);
+}
+
+.contacto__card {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background-color: var(--color-blanco);
+  padding: 1.2rem;
+  border-radius: 1.25rem;
+}
+
+.contacto__card span {
+  color: var(--color-morado);
+  font-size: 2rem;
+}
+
+.contacto__card p {
+  margin: 0;
+}
+
+.contacto__email {
+  display: inline-flex;
+  align-items: center;
+
+  margin-top: 0.35rem;
+  padding: 0.35rem 0.75rem;
+
+  border-radius: 999px;
+
+  background-color: rgb(124 77 255 / 10%);
+
+  color: var(--color-morado);
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition: all 0.25s ease;
+}
+
+.contacto__email:hover {
+  background-color: var(--color-rosa);
+
+  color: var(--color-blanco);
+
+  transform: translateY(-2px);
+}

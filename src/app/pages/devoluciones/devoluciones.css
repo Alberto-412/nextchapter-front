@@ -1,0 +1,252 @@
+/**
+ * Contenedor principal de la página.
+ *
+ * Limitamos el ancho para que el contenido
+ * no quede demasiado estirado en pantallas grandes.
+ */
+.devoluciones {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+/**
+ * Parte superior de la página.
+ */
+.devoluciones__hero {
+  max-width: 850px;
+  margin: 0 auto 4rem;
+  text-align: center;
+}
+
+.devoluciones__eyebrow {
+  margin-bottom: 0.75rem;
+
+  color: var(--color-morado);
+
+  font-size: 0.85rem;
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.devoluciones h1 {
+  margin-bottom: 1rem;
+
+  color: var(--color-azul);
+
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.devoluciones__intro {
+  color: var(--color-gris-medio);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+/**
+ * Grid de tarjetas informativas.
+ */
+.devoluciones__contenido {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+
+  margin-bottom: 4rem;
+}
+
+.devoluciones__card {
+  padding: 2rem;
+  border-radius: 1.5rem;
+
+  background-color: var(--color-blanco);
+
+  box-shadow: 0 12px 30px rgb(31 42 68 / 8%);
+}
+
+.devoluciones__icon {
+  display: inline-flex;
+  margin-bottom: 1rem;
+
+  color: var(--color-morado);
+
+  font-size: 2.2rem;
+
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.devoluciones__card h2 {
+  margin-bottom: 0.75rem;
+
+  color: var(--color-azul);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.devoluciones__card p {
+  color: var(--color-gris-medio);
+  line-height: 1.8;
+}
+
+/**
+ * Sección donde explicamos el proceso paso a paso.
+ */
+.devoluciones__pasos {
+  margin-bottom: 4rem;
+}
+
+.devoluciones__pasos h2 {
+  margin-bottom: 2rem;
+
+  color: var(--color-azul);
+
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.devoluciones__timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.timeline__item {
+  padding: 2rem 1.5rem;
+  border-radius: 1.5rem;
+
+  background-color: var(--color-blanco);
+
+  text-align: center;
+
+  box-shadow: 0 10px 25px rgb(31 42 68 / 6%);
+}
+
+.timeline__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 60px;
+  height: 60px;
+
+  margin: 0 auto 1rem;
+
+  border-radius: 50%;
+
+  background-color: var(--color-morado);
+  color: var(--color-blanco);
+
+  font-size: 1.8rem;
+
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.timeline__item p {
+  color: var(--color-gris-medio);
+  line-height: 1.7;
+}
+
+/**
+ * Bloque final de contacto.
+ */
+.devoluciones__contacto {
+  padding: 3rem;
+  border-radius: 2rem;
+
+  background-color: var(--color-azul);
+
+  text-align: center;
+}
+
+.devoluciones__contacto-icon {
+  margin-bottom: 1rem;
+
+  color: var(--color-amarillo);
+
+  font-size: 3rem;
+
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.devoluciones__contacto h2 {
+  margin-bottom: 1rem;
+
+  color: var(--color-blanco);
+
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.devoluciones__contacto p {
+  max-width: 650px;
+  margin: 0 auto 1.5rem;
+
+  color: var(--color-gris-claro);
+
+  line-height: 1.8;
+}
+
+.devoluciones__contacto a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1rem 1.75rem;
+
+  border-radius: 999px;
+
+  background-color: var(--color-amarillo);
+  color: var(--color-azul);
+
+  font-weight: 700;
+  text-decoration: none;
+
+  transition: all 0.2s ease;
+}
+
+.devoluciones__contacto a:hover {
+  background-color: var(--color-rosa);
+  color: var(--color-blanco);
+}
+
+/**
+ * Responsive para tablets.
+ */
+@media (max-width: 900px) {
+  .devoluciones__contenido {
+    grid-template-columns: 1fr;
+  }
+
+  .devoluciones__timeline {
+    grid-template-columns: 1fr;
+  }
+}
+
+/**
+ * Responsive para móviles.
+ */
+@media (max-width: 768px) {
+  .devoluciones {
+    padding: 3rem 1rem;
+  }
+
+  .devoluciones__contacto {
+    padding: 2rem 1.25rem;
+  }
+}

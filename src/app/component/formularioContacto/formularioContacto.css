@@ -1,0 +1,42 @@
+.formulario-contacto {
+  background-color: var(--color-blanco);
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 18px 45px rgb(31 42 68 / 10%);
+}
+
+.formulario-contacto label {
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: var(--color-azul);
+}
+
+.formulario-contacto .form-control {
+  border-radius: 1rem;
+  border: 1px solid var(--color-gris-claro);
+  padding: 0.85rem 1rem;
+}
+
+.formulario-contacto .form-control:focus {
+  border-color: var(--color-morado);
+  box-shadow: 0 0 0 0.2rem rgb(124 77 255 / 15%);
+}
+
+.formulario-contacto__btn {
+  width: 100%;
+  padding: 0.9rem 1.4rem;
+  border-radius: 999px;
+  background-color: var(--color-morado);
+  color: var(--color-blanco);
+  font-weight: 800;
+}
+
+.formulario-contacto__ok {
+  color: var(--color-turquesa);
+  font-weight: 700;
+}
+
+.formulario-contacto__error {
+  color: var(--color-rosa);
+  font-weight: 700;
+}

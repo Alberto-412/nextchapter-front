@@ -1,0 +1,109 @@
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f7f3e9;
+  color: #1f2a44;
+}
+
+body {
+  min-height: 100vh;
+}
+
+/**
+ * Evita que aparezca scroll horizontal en la página.
+ *
+ * el footer puede sobresalir unos pocos píxeles
+ * del ancho de la pantalla.
+ *
+ * Con overflow-x: hidden ocultamos cualquier desbordamiento
+ * horizontal para que el usuario no pueda desplazarse
+ * hacia los lados accidentalmente.
+ */
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* Oculta la barra de navegación (navbar) en las páginas del panel de administración */
+body:has(.admin-layout) .navbar {
+  display: none;
+}
+
+/**
+ * ======================================
+ * NEXTCHAPTER - VARIABLES GLOBALES
+ * ======================================
+ *
+ * Todas las páginas deben utilizar estas
+ * variables y nunca colores hexadecimales
+ * directamente.
+ *
+ * Si la marca cambia, solo modificamos
+ * estos valores.
+ */
+
+:root {
+  /* ==========================
+     PALETA NEXTCHAPTER
+     ========================== */
+
+  /* Azul marino principal */
+  --color-azul: #1f2a44;
+
+  /* Morado CTA */
+  --color-morado: #7c4dff;
+
+  /* Coral / Rosa vibrante */
+  --color-rosa: #ff4d6d;
+
+  /* Amarillo */
+  --color-amarillo: #ffc83d;
+
+  /* Turquesa */
+  --color-turquesa: #2ec4b6;
+
+  /* Crema / Papel */
+  --color-crema: #f7f3e9;
+
+  /* ==========================
+     NEUTROS
+     ========================== */
+
+  --color-blanco: #ffffff;
+
+  --color-gris-claro: #f8fafc;
+  --color-gris-medio: #64748b;
+  --color-gris-oscuro: #334155;
+}
+
+/* Ocultar navbar y footer al imprimir (para las facturas) */
+@media print {
+  app-navbar,
+  app-footer {
+    display: none !important;
+  }
+}
+/**
+ * Evita que aparezca scroll horizontal en la página.
+ *
+ * A veces algún componente (footer, carrusel, imagen,
+ * formulario, etc.) puede sobresalir unos pocos píxeles
+ * del ancho de la pantalla.
+ *
+ * Con overflow-x: hidden ocultamos cualquier desbordamiento
+ * horizontal para que el usuario no pueda desplazarse
+ * hacia los lados accidentalmente.
+ */
+html,
+body {
+  overflow-x: hidden;
+}

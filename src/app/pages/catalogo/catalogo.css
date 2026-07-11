@@ -1,0 +1,176 @@
+/**
+ * Bootstrap controla:
+ * - Filas
+ * - Columnas
+ * - Responsive
+ *
+ * Este CSS controla:
+ * - Colores
+ * - Espaciados
+ * - Tarjetas
+ * - Tipografía visual
+ */
+
+.catalogo {
+  min-height: 100vh;
+  padding: 2rem;
+
+  background-color: var(--color-crema);
+  color: var(--color-azul);
+}
+
+.catalogo__sidebar {
+  border-right: 1px solid var(--color-gris-claro);
+  padding-right: 1.5rem;
+}
+
+.catalogo__contenido {
+  min-width: 0;
+}
+
+.catalogo__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+
+  margin-bottom: 2rem;
+}
+
+.catalogo__ruta {
+  color: var(--color-gris-medio);
+  font-size: 0.85rem;
+}
+
+.catalogo__header h1 {
+  margin: 0.5rem 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.catalogo__orden {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  font-weight: 600;
+}
+
+.catalogo__orden select {
+  border: 1px solid var(--color-gris-claro);
+  border-radius: 0.9rem;
+  padding: 0.8rem 1rem;
+
+  background-color: var(--color-blanco);
+  color: var(--color-azul);
+
+  font-family: inherit;
+  font-weight: 700;
+}
+
+/* Cards del catálogo */
+
+.catalogo__contenido .row > div {
+  display: flex;
+  justify-content: center;
+}
+
+/*
+ *
+ * Limitamos el ancho máximo para que todas las
+ * las tarjetas tengan exactamente el mismo tamaño.
+ */
+
+.catalogo__contenido app-libro-card {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+}
+
+/* Estados */
+
+.estado {
+  padding: 1rem;
+  border-radius: 1rem;
+
+  background-color: var(--color-blanco);
+
+  font-weight: 700;
+}
+
+.estado--error {
+  color: var(--color-rosa);
+}
+
+/* En tablet y móvil quitamos la línea lateral */
+
+@media (max-width: 991px) {
+  .catalogo__sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--color-gris-claro);
+
+    padding-right: 0;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Ajustes para móvil */
+
+@media (max-width: 575px) {
+  .catalogo {
+    padding: 1rem;
+  }
+
+  .catalogo__header {
+    flex-direction: column;
+  }
+}
+
+/* PAGINACIÓN */
+
+.catalogo__paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 1.25rem;
+
+  margin-top: 4rem;
+}
+
+.catalogo__pagina,
+.catalogo__pagina-nav {
+  border: none;
+  background: transparent;
+
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+
+  color: var(--color-gris-medio);
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+/* Hover */
+
+.catalogo__pagina:hover,
+.catalogo__pagina-nav:hover {
+  color: var(--color-morado);
+}
+
+/* Página activa */
+
+.catalogo__pagina--activa {
+  color: var(--color-morado);
+  font-weight: 800;
+}
+
+/* Flechas desactivadas */
+
+.catalogo__pagina-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

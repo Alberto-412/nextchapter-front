@@ -1,0 +1,212 @@
+/**
+ * Contenedor principal.
+ */
+.empleo {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+/**
+ * Hero principal.
+ */
+.empleo__hero {
+  max-width: 900px;
+  margin: 0 auto 4rem;
+  text-align: center;
+}
+
+.empleo__eyebrow {
+  margin-bottom: 0.75rem;
+
+  color: var(--color-morado);
+
+  font-size: 0.85rem;
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.empleo h1 {
+  margin-bottom: 1rem;
+
+  color: var(--color-azul);
+
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+}
+
+.empleo__intro {
+  color: var(--color-gris-medio);
+  line-height: 1.8;
+}
+
+/**
+ * Cultura.
+ */
+.empleo__cultura {
+  margin-bottom: 4rem;
+  padding: 3rem;
+
+  border-radius: 2rem;
+
+  background-color: var(--color-blanco);
+
+  text-align: center;
+
+  box-shadow: 0 12px 30px rgb(31 42 68 / 8%);
+}
+
+.empleo__cultura-icon {
+  margin-bottom: 1rem;
+
+  color: var(--color-morado);
+
+  font-size: 3rem;
+
+  font-variation-settings: 'FILL' 1;
+}
+
+/**
+ * Ofertas.
+ */
+.empleo__ofertas {
+  margin-bottom: 4rem;
+}
+
+.empleo__ofertas h2 {
+  margin-bottom: 2rem;
+
+  text-align: center;
+
+  color: var(--color-azul);
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.empleo__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.oferta-card {
+  padding: 2rem;
+
+  border-radius: 1.5rem;
+
+  background-color: var(--color-blanco);
+
+  box-shadow: 0 12px 30px rgb(31 42 68 / 8%);
+}
+
+.oferta-card__icon {
+  margin-bottom: 1rem;
+
+  color: var(--color-morado);
+
+  font-size: 2.5rem;
+
+  font-variation-settings: 'FILL' 1;
+}
+
+.oferta-card h3 {
+  margin-bottom: 0.5rem;
+
+  color: var(--color-azul);
+
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.oferta-card__tipo {
+  margin-bottom: 1rem;
+
+  color: var(--color-rosa);
+
+  font-weight: 700;
+}
+
+.oferta-card p {
+  color: var(--color-gris-medio);
+  line-height: 1.8;
+}
+
+/**
+ * CTA final.
+ */
+.empleo__cta {
+  padding: 3rem;
+
+  border-radius: 2rem;
+
+  background-color: var(--color-azul);
+
+  text-align: center;
+}
+
+.empleo__cta-icon {
+  margin-bottom: 1rem;
+
+  color: var(--color-amarillo);
+
+  font-size: 3rem;
+
+  font-variation-settings: 'FILL' 1;
+}
+
+.empleo__cta h2 {
+  margin-bottom: 1rem;
+
+  color: var(--color-blanco);
+
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.empleo__cta p {
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+
+  color: var(--color-gris-claro);
+
+  line-height: 1.8;
+}
+
+.empleo__cta a {
+  display: inline-block;
+
+  padding: 1rem 1.75rem;
+
+  border-radius: 999px;
+
+  background-color: var(--color-amarillo);
+
+  color: var(--color-azul);
+
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.empleo__cta a:hover {
+  background-color: var(--color-rosa);
+  color: var(--color-blanco);
+}
+
+@media (max-width: 900px) {
+  .empleo__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .empleo {
+    padding: 3rem 1rem;
+  }
+
+  .empleo__cultura,
+  .empleo__cta {
+    padding: 2rem 1.25rem;
+  }
+}

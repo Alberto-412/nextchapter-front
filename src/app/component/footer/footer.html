@@ -1,0 +1,118 @@
+<footer class="footer-nextchapter">
+
+    <div class="container">
+
+        <!--
+            Parte superior del footer.
+
+            Usamos Bootstrap solo para el responsive:
+            - row
+            - col-12
+            - col-lg-5
+            - col-lg-7
+            - gy-5
+
+            En escritorio:
+            newsletter a la izquierda y enlaces a la derecha.
+
+            En móvil:
+            se colocan uno debajo del otro.
+        -->
+        <div class="footer-nextchapter__top row gy-5">
+
+            <!-- Newsletter compacto -->
+            <div class="col-12 col-lg-5">
+
+                <div class="footer-nextchapter__newsletter">
+                    <app-newsletter [compacto]="true"></app-newsletter>
+                </div>
+
+            </div>
+
+            <!-- Enlaces del footer -->
+            <div class="col-12 col-lg-7">
+
+                <div class="footer-nextchapter__content row gy-5">
+
+                    <!-- Logo y frase -->
+                    <div class="col-12 col-md-6 col-xl-4">
+
+                        <div class="footer-nextchapter__brand">
+
+                            <img src="./image/nextchapter_logo_vertical_next_chapter_white.png" alt="Logo NextChapter"
+                                class="footer-nextchapter__logo" />
+
+                            <p>
+                                Cada libro abre un portal. Nosotros solo te ayudamos a encontrar
+                                cuál será tu próximo capítulo.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Enlaces de exploración -->
+                    <div class="col-12 col-md-6 col-xl-2">
+
+                        <h3>Explora</h3>
+
+                        <ul>
+                            <li><a routerLink="/catalogo">Catálogo</a></li>
+                            <li><a routerLink="/quienes-somos">Quiénes somos</a></li>
+                            <li><a routerLink="/bono-cultural-joven">Bono Cultural</a></li>
+                            <li><a routerLink="/nuestras-librerias">Librerías</a></li>
+                        </ul>
+
+                    </div>
+
+                    <!-- Enlaces de ayuda -->
+                    <div class="col-12 col-md-6 col-xl-3">
+
+                        <h3>Ayuda</h3>
+
+                        <ul>
+                            <li><a routerLink="/preguntas-frecuentes">FAQ</a></li>
+                            <li><a routerLink="/envios">Envíos</a></li>
+                            <li><a routerLink="/contacto">Contacto</a></li>
+                            <li><a routerLink="/trabaja-con-nosotros">Trabaja con nosotros</a></li>
+                        </ul>
+
+                    </div>
+
+                    <!-- Info contacto -->
+                    <div class="col-12 col-md-6 col-xl-3">
+
+                        <h3>Cuartel lector</h3>
+
+                        <ul class="footer-nextchapter__info">
+                            <li>📍 Centro Comercial La Vaguada</li>
+                            <li>📧 hola@nextchapter.com</li>
+                            <li>🕹️ Nivel desbloqueado: lector legendario</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!--
+            Parte inferior del footer.
+        -->
+        <div class="footer-nextchapter__bottom">
+
+            <p>
+                © {{ anioActual }} NextChapter. Todos los derechos reservados.
+            </p>
+
+            <p>
+                Hecho con café, commits y muchas páginas por leer.
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>

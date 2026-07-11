@@ -1,0 +1,280 @@
+<!--
+  ============================================================
+  QUÉ HACE: Template de la página de acceso.
+            Panel de marca a la izquierda + tarjeta con
+            pestañas (Entrar / Nuevo cliente) a la derecha.
+  ============================================================
+-->
+<section class="acceso">
+    <div class="acceso__caja">
+
+
+        <!-- ── BLOQUE 1: PANEL DE MARCA (izquierda) ─────────────
+         Contenido estático: logo, eslogan, cita y ventajas.
+         No tiene lógica Angular, solo HTML y CSS.
+    ─────────────────────────────────────────────────────── -->
+        <aside class="acceso__panel">
+
+            <!-- aria-hidden="true" → los lectores de pantalla ignoran
+           estos iconos decorativos (no aportan información). -->
+            <span class="material-symbols-outlined acceso__deco acceso__deco--libro"
+                aria-hidden="true">auto_stories</span>
+            <span class="material-symbols-outlined acceso__deco acceso__deco--marca" aria-hidden="true">bookmark</span>
+
+            <!-- Mismo logo que usa la navbar. La ruta es relativa a /public,
+           que Angular sirve como raíz del servidor (no necesita ../../). -->
+            <img src="/image/0.75x/aalogo_vertical_next_chapter_whiteldpi.png" alt="Next Chapter"
+                class="acceso__logo" />
+
+            <p class="acceso__eslogan">Tu próximo capítulo empieza aquí</p>
+            <p class="acceso__cita">«Un lector vive mil vidas antes de morir»</p>
+
+            <ul class="acceso__ventajas">
+                <li><span class="material-symbols-outlined">verified_user</span> Compra segura</li>
+                <li><span class="material-symbols-outlined">local_shipping</span> Envío gratis a partir de 19 €</li>
+                <li><span class="material-symbols-outlined">storefront</span> Recogida en librería gratis</li>
+                <li><span class="material-symbols-outlined">history</span> Devoluciones hasta 14 días</li>
+            </ul>
+        </aside>
+
+
+        <!-- ── BLOQUE 2: FORMULARIO (derecha) ───────────────────
+         Aquí empieza la lógica Angular.
+    ─────────────────────────────────────────────────────── -->
+        <div class="acceso__formulario">
+            <div class="acceso__tarjeta">
+
+
+                <!-- ── BLOQUE 2a: PESTAÑAS ────────────────────────────
+             role="tablist" → accesibilidad: indica que este div
+             contiene pestañas de navegación.
+
+             Cada botón tiene:
+             · type="button" → IMPORTANTE: sin esto, un botón dentro
+               de un <form> tiene type="submit" por defecto y al pulsarlo
+               enviaría el formulario en vez de cambiar de pestaña.
+             · [class.acceso__pestana--activa] → binding de clase:
+               Angular añade o quita esta clase según si tabActiva()
+               coincide con la pestaña. Controla el subrayado morado.
+             · [attr.aria-selected] → accesibilidad: indica al lector
+               de pantalla qué pestaña está seleccionada (true/false).
+             · (click)="cambiarTab(...)" → llama al método que cambia
+               el signal y limpia los mensajes.
+        ─────────────────────────────────────────────────── -->
+                <div class="acceso__pestanas" role="tablist">
+
+                    <button type="button" role="tab" class="acceso__pestana"
+                        [class.acceso__pestana--activa]="tabActiva() === 'entrar'"
+                        [attr.aria-selected]="tabActiva() === 'entrar'" (click)="cambiarTab('entrar')">
+                        Entrar
+                    </button>
+
+                    <button type="button" role="tab" class="acceso__pestana"
+                        [class.acceso__pestana--activa]="tabActiva() === 'registro'"
+                        [attr.aria-selected]="tabActiva() === 'registro'" (click)="cambiarTab('registro')">
+                        Nuevo cliente
+                    </button>
+                </div>
+
+
+                <div class="acceso__cuerpo">
+
+                    <!-- ── BLOQUE 2b: ALERTAS GLOBALES ──────────────────
+               Se muestran encima del formulario activo.
+               @if → control flow de Angular 17+: si la condición
+               es verdadera monta el elemento; si no, lo destruye.
+               Los signals se leen con (): mensajeOk(), error().
+               · role="status" → el lector de pantalla anuncia
+                 mensajes de éxito sin interrumpir al usuario.
+               · role="alert"  → el lector de pantalla anuncia
+                 errores inmediatamente (más urgente que status).
+          ─────────────────────────────────────────────────── -->
+                    @if (mensajeOk()) {
+                    <p class="acceso__alerta acceso__alerta--ok" role="status">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        {{ mensajeOk() }}
+                    </p>
+                    }
+                    @if (error()) {
+                    <p class="acceso__alerta acceso__alerta--error" role="alert">
+                        <span class="material-symbols-outlined">error</span>
+                        {{ error() }}
+                    </p>
+                    }
+
+
+                    <!-- ── BLOQUE 2c: PESTAÑA "ENTRAR" (login) ──────────
+               @if/@else → Angular monta UNO de los dos bloques
+               según el valor de tabActiva(). No los oculta con
+               display:none, los destruye y recrea. Por eso los
+               valores escritos se pierden al cambiar de pestaña.
+          ─────────────────────────────────────────────────── -->
+                    @if (tabActiva() === 'entrar') {
+
+                    <h1>Inicia sesión</h1>
+
+                    <!-- [formGroup] → conecta este <form> con loginForm del .ts.
+                 (ngSubmit)  → cuando el usuario pulsa un botón type="submit"
+                               o presiona Enter, Angular llama a login().
+                               Usa ngSubmit en vez de (click) en el botón
+                               para que también funcione con la tecla Enter. -->
+                    <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+                        <div class="acceso__campo">
+                            <label for="login-mail">Email*</label>
+
+                            <!-- formControlName → vincula este input al control "mail"
+                     de loginForm. Angular gestiona su valor automáticamente.
+                     autocomplete → ayuda al navegador a autocompletar. -->
+                            <input id="login-mail" type="email" formControlName="mail" autocomplete="email" />
+
+                            <!-- Mostramos el error solo si el usuario ya tocó el campo
+                     (touched) Y el campo es inválido. Sin "touched", el error
+                     aparecería en cuanto carga la página, antes de escribir. -->
+                            @if (loginForm.controls.mail.touched && loginForm.controls.mail.invalid) {
+                            <p class="acceso__error-campo">Introduce un email válido.</p>
+                            }
+                        </div>
+
+                        <div class="acceso__campo">
+                            <label for="login-contrasena">Contraseña*</label>
+
+                            <!-- Wrapper relativo para posicionar el botón del ojo dentro. -->
+                            <div class="acceso__input-contrasena">
+
+                                <!-- [type] → binding: si verContrasena() es true muestra
+                       el texto plano; si no, lo oculta con asteriscos. -->
+                                <input id="login-contrasena" [type]="verContrasena() ? 'text' : 'password'"
+                                    formControlName="contrasena" autocomplete="current-password" />
+
+                                <!-- Botón del ojo: type="button" para no disparar el submit.
+                       [attr.aria-label] cambia el texto del lector de pantalla
+                       según el estado del ojo (mostrar / ocultar). -->
+                                <button type="button" class="acceso__ojo" (click)="toggleVerContrasena()"
+                                    [attr.aria-label]="verContrasena() ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+                                    <span class="material-symbols-outlined">
+                                        <!-- Interpolación {{ }}: cambia el icono según el signal. -->
+                                        {{ verContrasena() ? 'visibility_off' : 'visibility' }}
+                                    </span>
+                                </button>
+                            </div>
+
+                            @if (loginForm.controls.contrasena.touched && loginForm.controls.contrasena.invalid) {
+                            <p class="acceso__error-campo">La contraseña es obligatoria.</p>
+                            }
+                        </div>
+
+                        <!-- Botón de envío. [disabled] → binding: Angular deshabilita
+                   el botón mientras cargando() sea true, evitando doble envío.
+                   El texto cambia según el estado (cargando / en reposo). -->
+                        <button type="submit" class="acceso__btn" [disabled]="cargando()">
+                            {{ cargando() ? 'Entrando...' : 'iniciar sesión' }}
+                        </button>
+
+                        <!-- Enlace para cambiar a la pestaña de registro.
+                   type="button" para no disparar el submit del form. -->
+                        <p class="acceso__cambio">
+                            ¿Aún no tienes cuenta?
+                            <button type="button" (click)="cambiarTab('registro')">Regístrate</button>
+                        </p>
+                    </form>
+
+
+                    <!-- ── BLOQUE 2d: PESTAÑA "NUEVO CLIENTE" (registro) ─
+               @else → se monta cuando tabActiva() NO es 'entrar'.
+          ─────────────────────────────────────────────────── -->
+                    } @else {
+
+                    <h1>Crea tu cuenta</h1>
+
+                    <p class="acceso__aviso">
+                        Tras registrarte, un administrador validará tu cuenta antes de que
+                        puedas iniciar sesión y realizar pedidos.
+                    </p>
+
+                    <form [formGroup]="registroForm" (ngSubmit)="registrar()">
+
+                        <div class="acceso__campo">
+                            <label for="reg-nombre">Nombre*</label>
+                            <input id="reg-nombre" type="text" formControlName="nombre" autocomplete="name" />
+
+                            @if (registroForm.controls.nombre.touched && registroForm.controls.nombre.invalid) {
+                            <p class="acceso__error-campo">El nombre es obligatorio (mín. 2 caracteres).</p>
+                            }
+                        </div>
+
+                        <div class="acceso__campo">
+                            <label for="reg-mail">Email*</label>
+                            <input id="reg-mail" type="email" formControlName="mail" autocomplete="email" />
+
+                            @if (registroForm.controls.mail.touched && registroForm.controls.mail.invalid) {
+                            <p class="acceso__error-campo">Introduce un email válido.</p>
+                            }
+                        </div>
+
+                        <div class="acceso__campo">
+                            <label for="reg-contrasena">Contraseña*</label>
+
+                            <div class="acceso__input-contrasena">
+                                <input id="reg-contrasena" [type]="verContrasena() ? 'text' : 'password'"
+                                    formControlName="contrasena" autocomplete="new-password" />
+
+                                <button type="button" class="acceso__ojo" (click)="toggleVerContrasena()"
+                                    [attr.aria-label]="verContrasena() ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+                                    <span class="material-symbols-outlined">
+                                        {{ verContrasena() ? 'visibility_off' : 'visibility' }}
+                                    </span>
+                                </button>
+                            </div>
+
+                            @if (registroForm.controls.contrasena.touched && registroForm.controls.contrasena.invalid) {
+                            <p class="acceso__error-campo">Mínimo 6 caracteres.</p>
+                            }
+                        </div>
+
+                        <div class="acceso__campo">
+                            <label for="reg-repetir">Repite la contraseña*</label>
+
+                            <!-- CASO ESPECIAL: el error "noCoinciden" vive en el GRUPO,
+                     no en este control. Por eso no podemos usar ng-invalid
+                     aquí para pintar el borde en rojo — el control en sí
+                     es válido (tiene texto, cumple "required").
+                     Solución: binding manual [class.acceso__input--error]
+                     que lee el error del grupo con registroForm.hasError().
+
+                     dirty || touched → mostramos el error tanto si el usuario
+                     ha escrito (dirty) como si solo ha tocado el campo (touched),
+                     para que avise mientras escribe sin esperar a salir del input. -->
+                            <input id="reg-repetir" [type]="verContrasena() ? 'text' : 'password'"
+                                formControlName="repetirContrasena" autocomplete="new-password"
+                                [class.acceso__input--error]="
+                    (registroForm.controls.repetirContrasena.dirty || registroForm.controls.repetirContrasena.touched)
+                    && registroForm.hasError('noCoinciden')
+                  " />
+
+                            @if (
+                            (registroForm.controls.repetirContrasena.dirty ||
+                            registroForm.controls.repetirContrasena.touched)
+                            && registroForm.hasError('noCoinciden')
+                            ) {
+                            <p class="acceso__error-campo">Las contraseñas no coinciden.</p>
+                            }
+                        </div>
+
+                        <button type="submit" class="acceso__btn" [disabled]="cargando()">
+                            {{ cargando() ? 'Creando cuenta...' : 'crear cuenta' }}
+                        </button>
+
+                        <p class="acceso__cambio">
+                            ¿Ya tienes cuenta?
+                            <button type="button" (click)="cambiarTab('entrar')">Inicia sesión</button>
+                        </p>
+                    </form>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

@@ -1,0 +1,278 @@
+.resenas-libro {
+  margin-top: 4rem;
+  padding: 2.5rem;
+  border-radius: 1.75rem;
+
+  background-color: var(--color-blanco);
+  box-shadow: 0 18px 45px rgb(31 42 68 / 10%);
+}
+
+/**
+ * Cabecera de reseñas.
+ */
+.resenas-libro__header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1.5rem;
+
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.resenas-libro__header::before,
+.resenas-libro__header::after {
+  content: '';
+  height: 1px;
+  background-color: var(--color-gris-claro);
+}
+
+.resenas-libro__header h2 {
+  margin: 0;
+  color: var(--color-azul);
+
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 800;
+}
+
+.resenas-libro__subtitulo {
+  margin-bottom: 2rem;
+  color: var(--color-gris-medio);
+  text-align: center;
+  font-weight: 600;
+}
+
+/**
+ * Resumen superior.
+ */
+.resenas-libro__resumen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+
+  margin-bottom: 2.5rem;
+}
+
+.resenas-libro__media {
+  flex: 0 0 230px;
+  text-align: center;
+}
+
+.resenas-libro__estrellas {
+  margin: 0;
+  color: var(--color-amarillo);
+  font-size: 1.8rem;
+  letter-spacing: 0.1rem;
+}
+
+.resenas-libro__numero {
+  margin: 0.5rem 0;
+
+  color: var(--color-azul);
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.resenas-libro__numero span {
+  color: var(--color-gris-medio);
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.resenas-libro__total {
+  margin-bottom: 1rem;
+  color: var(--color-gris-medio);
+  font-weight: 600;
+}
+
+.resenas-libro__boton {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.9rem 1.5rem;
+
+  background-color: var(--color-morado);
+  color: var(--color-blanco);
+
+  font-family: inherit;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.resenas-libro__boton:hover,
+.resenas-libro__boton:focus-visible {
+  background-color: var(--color-rosa);
+  outline: 3px solid rgb(255 77 109 / 25%);
+}
+
+/**
+ * Lista de distribución.
+ */
+.resenas-libro__distribucion {
+  display: grid;
+  gap: 0.7rem;
+
+  width: min(100%, 500px);
+}
+
+.resenas-libro__fila {
+  display: grid;
+  grid-template-columns: 90px minmax(180px, 350px) 24px;
+  gap: 0.45rem;
+  align-items: center;
+
+  color: var(--color-azul);
+  font-weight: 700;
+}
+
+.resenas-libro__barra {
+  width: 100%;
+  height: 0.6rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background-color: var(--color-gris-claro);
+}
+
+.resenas-libro__barra span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--color-amarillo);
+}
+
+.resenas-libro__fila span:last-child {
+  width: 24px;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+
+/**
+ * Separador.
+ */
+.resenas-libro__separador {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid var(--color-gris-claro);
+}
+
+/**
+ * Lista de reseñas.
+ */
+.resenas-libro__lista {
+  display: grid;
+  gap: 1rem;
+}
+
+.resena-card {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 1.5rem;
+
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+
+  background-color: var(--color-crema);
+}
+
+.resena-card__usuario h3 {
+  margin: 0 0 0.35rem;
+
+  color: var(--color-azul);
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.resena-card__fecha,
+.resena-card__email {
+  margin: 0;
+  color: var(--color-gris-medio);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.resena-card__rating {
+  margin-bottom: 0.75rem;
+
+  color: var(--color-gris-medio);
+  font-weight: 800;
+}
+
+.resena-card__estrellas {
+  color: var(--color-amarillo);
+  letter-spacing: 0.05rem;
+}
+
+.resena-card__comentario {
+  margin: 0;
+  color: var(--color-azul);
+  line-height: 1.7;
+}
+
+.resenas-libro__vacio {
+  margin: 0;
+  padding: 1.5rem;
+  border-radius: 1rem;
+
+  background-color: var(--color-crema);
+  color: var(--color-gris-medio);
+
+  text-align: center;
+  font-weight: 700;
+}
+
+/**
+ * Responsive.
+ */
+@media (max-width: 850px) {
+  .resenas-libro {
+    padding: 1.5rem;
+  }
+
+  .resenas-libro__header {
+    grid-template-columns: 1fr;
+  }
+
+  .resenas-libro__header::before,
+  .resenas-libro__header::after {
+    display: none;
+  }
+
+  .resenas-libro__resumen {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .resenas-libro__media {
+    flex: initial;
+  }
+
+  .resenas-libro__distribucion {
+    width: 100%;
+  }
+
+  .resenas-libro__fila {
+    grid-template-columns: 80px 1fr 24px;
+  }
+
+  .resena-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .resenas-libro {
+    padding: 1rem;
+  }
+
+  .resenas-libro__fila {
+    grid-template-columns: 65px 1fr 20px;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+  }
+
+  .resenas-libro__numero {
+    font-size: 3.5rem;
+  }
+}

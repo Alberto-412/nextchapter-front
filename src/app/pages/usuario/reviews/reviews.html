@@ -1,0 +1,43 @@
+<div class="reviews-container">
+    <h1>Mis Reseñas</h1>
+
+    @if (mensaje) {
+    <p class="mensaje-ok">{{ mensaje }}</p>
+    }
+    @if (error) {
+    <p class="mensaje-error">{{ error }}</p>
+    }
+
+    <!-- LISTADO -->
+    @if (!modoEdicion) {
+    <div>
+        @if (reviews.length === 0) {
+        <p>No tienes reseñas publicadas</p>
+        }
+        @for (review of reviews; track review.id) {
+        <div>
+            <p><strong>Producto ID:</strong> {{ review.id_producto }}</p>
+            <p><strong>Calificación:</strong> {{ review.calificacion }}/5</p>
+            <p><strong>Comentario:</strong> {{ review.comentario }}</p>
+            <p><strong>Fecha:</strong> {{ review.fecha }}</p>
+            <button (click)="editarReview(review)">Editar</button>
+            <button (click)="eliminarReview(review.id)">Eliminar</button>
+        </div>
+        }
+    </div>
+    }
+
+    <!-- EDICIÓN -->
+    @if (modoEdicion) {
+    <div>
+        <h2>Editar reseña</h2>
+        <label>Calificación (1-5)</label>
+        <input type="number" min="1" max="5" [(ngModel)]="datosEdicion.calificacion" />
+        <label>Comentario</label>
+        <textarea [(ngModel)]="datosEdicion.comentario"></textarea>
+        <button (click)="guardarReview()">Guardar</button>
+        <button (click)="cancelar()">Cancelar</button>
+    </div>
+    }
+
+</div>

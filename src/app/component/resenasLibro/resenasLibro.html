@@ -1,0 +1,81 @@
+<section class="resenas-libro">
+    <header class="resenas-libro__header">
+        <h2>Opiniones de lectores</h2>
+    </header>
+
+    @if (resenas().length === 0) {
+    <p class="resenas-libro__vacio">
+        Este libro todavía no tiene reseñas.
+    </p>
+    } @else {
+    <p class="resenas-libro__subtitulo">
+        Opiniones reales de usuarios de NextChapter
+    </p>
+
+    <div class="resenas-libro__resumen">
+        <div class="resenas-libro__media">
+            <p class="resenas-libro__estrellas">
+                {{ getEstrellas(mediaResenas()) }}
+            </p>
+
+            <p class="resenas-libro__numero">
+                {{ mediaResenas() }}
+                <span>/5</span>
+            </p>
+
+            <p class="resenas-libro__total">
+                {{ resenas().length }} reseñas
+            </p>
+
+            <button type="button" class="resenas-libro__boton">
+                Dejar mi opinión
+            </button>
+        </div>
+
+        <div class="resenas-libro__distribucion">
+            @for (fila of distribucion(); track fila.estrellas) {
+            <div class="resenas-libro__fila">
+                <span>{{ getEstrellas(fila.estrellas) }}</span>
+
+                <div class="resenas-libro__barra">
+                    <span [style.width.%]="fila.porcentaje"></span>
+                </div>
+
+                <span>{{ fila.total }}</span>
+            </div>
+            }
+        </div>
+    </div>
+
+    <hr class="resenas-libro__separador" />
+
+    <div class="resenas-libro__lista">
+        @for (resena of resenas(); track resena.id) {
+        <article class="resena-card">
+            <div class="resena-card__usuario">
+                <h3>{{ resena.usuario_nombre }}</h3>
+
+                <p class="resena-card__fecha">
+                    {{ resena.fecha | date: 'dd/MM/yyyy' }}
+                </p>
+
+            </div>
+
+            <div class="resena-card__contenido">
+                <p class="resena-card__rating">
+                    <span class="resena-card__estrellas">
+                        {{ getEstrellas(resena.calificacion) }}
+                    </span>
+
+                    {{ resena.calificacion }}/5
+                </p>
+
+                <p class="resena-card__comentario">
+                    {{ resena.comentario }}
+                </p>
+            </div>
+        </article>
+        }
+    </div>
+    }
+</section>

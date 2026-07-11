@@ -1,0 +1,54 @@
+<article class="libro-card">
+
+<!-- Corazón de favoritos, encima de la portada -->
+    <button
+        type="button"
+        class="libro-card__favorito"
+        [class.libro-card__favorito--activo]="esFavorito()"
+        (click)="toggleFavorito($event)"
+        [attr.aria-label]="esFavorito() ? 'Quitar de favoritos' : 'Añadir a favoritos'">
+        {{ esFavorito() ? '♥' : '♡' }}
+    </button>
+
+    <!-- Al pulsar la portada entramos al detalle del libro -->
+    <a [routerLink]="['/libros', libro().id]" class="libro-card__imagen-link">
+        <img class="libro-card__imagen" [src]="libro().imagen" [alt]="'Portada de ' + libro().titulo" />
+    </a>
+
+    <div class="libro-card__body">
+
+        <p class="libro-card__rating">
+            <span class="libro-card__estrellas">
+                {{ getEstrellas(libro().rating) }}
+            </span>
+
+            @if (libro().rating) {
+            <span class="libro-card__rating-numero">
+                {{ libro().rating }}
+            </span>
+            }
+        </p>
+
+        <!-- Agrupamos título y autor para que no queden espacios raros -->
+        <div class="libro-card__info">
+
+            <!-- Al pulsar el título también entramos al detalle -->
+            <h2>
+                <a [routerLink]="['/libros', libro().id]" class="libro-card__titulo-link">
+                    {{ libro().titulo }}
+                </a>
+            </h2>
+
+            <p class="libro-card__autor">
+                {{ libro().autores || 'Autor no disponible' }}
+            </p>
+
+        </div>
+
+        <p class="libro-card__precio">
+            {{ libro().precio }} €
+        </p>
+
+    </div>
+
+</article>

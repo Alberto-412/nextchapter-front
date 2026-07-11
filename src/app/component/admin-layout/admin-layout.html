@@ -1,0 +1,63 @@
+<!--
+  ============================================================
+  QUÉ HACE: Estructura visual compartida de todas las páginas
+            admin: sidebar + header + área de contenido.
+  ============================================================
+-->
+<div class="admin-layout">
+
+    <!-- SIDEBAR: componente hijo.
+         #sidebar    → variable de referencia local: permite llamar
+                        a métodos del componente desde el template padre
+                        con sidebar.toggleMenu().
+         (menuToggled) → escucha el @Output del sidebar: cuando se
+                          abre/cierra, llama a onMenuToggled() del layout. -->
+    <app-sidebar-admin #sidebar (menuToggled)="onMenuToggled($event)" />
+
+    <div class="admin-main">
+
+        <!-- HEADER STICKY ──────────────────────────────────── -->
+        <header class="admin-header">
+
+            <div class="admin-header-left">
+                <!-- Al pulsar el hamburguesa, llamamos directamente al método
+                     del sidebar usando la referencia local #sidebar -->
+                <button class="hamburger" (click)="sidebar.toggleMenu()">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <!-- Logo visible solo en móvil (el sidebar lo oculta en desktop) -->
+                <div class="mobile-logo">
+                    <img src="image/2x/aalogo_vertical_next_chapterxhdpi.png" alt="NextChapter" />
+                </div>
+            </div>
+
+            <!-- BUSCADOR: escribe en BusquedaService al teclear.
+                 [placeholder] → binding: cambia entre 'Buscar' y 'Buscar ...'
+                                  según isMobile (calculado con @HostListener).
+                 (input)       → se dispara en cada pulsación de tecla,
+                                  no solo al perder el foco (a diferencia de (change)). -->
+            <div class="admin-header-search">
+                <span class="material-symbols-outlined">search</span>
+                <input type="text" [placeholder]="searchPlaceholder" (input)="onBuscar($event)" />
+            </div>
+
+            <!-- Perfil del admin (estático por ahora) -->
+            <div class="admin-header-right">
+                <div class="admin-profile">
+                    <div class="admin-profile-info">
+                        <span class="admin-name">Admin</span>
+                        <span class="admin-role">Administrador</span>
+                    </div>
+                    <div class="admin-avatar">A</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTENIDO PRINCIPAL: aquí Angular renderiza el componente
+             hijo activo según la ruta (dashboard, pedidos, etc.).
+             <router-outlet> es el "hueco" donde aparece cada página. -->
+        <main class="admin-content">
+            <router-outlet />
+        </main>
+    </div>
+</div>

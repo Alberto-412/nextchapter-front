@@ -1,0 +1,15 @@
+.order-card {
+  background: var(--color-blanco);
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  font-family: 'Montserrat', sans-serif;
+}
+.order-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+.order-id { font-weight: 700; color: var(--color-azul); margin: 0 0 0.2rem; }
+.order-fecha { font-size: 0.8rem; color: var(--color-gris-medio); margin: 0; }
+.order-card-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 0.8rem; border-top: 1px solid #f3f3f3; }
+.order-total { font-size: 1.2rem; font-weight: 700; color: var(--color-morado); }
+.order-ver { text-decoration: none; color: var(--color-morado); font-weight: 600; font-size: 0.9rem; }
+.order-ver:hover { text-decoration: underline; }

@@ -1,0 +1,484 @@
+/**
+ * Página de acceso (login + registro) estilo Casa del Libro,
+ * versión dos columnas, adaptada a la identidad de NextChapter:
+ *
+ * - Tipografía: Montserrat (única fuente del proyecto, heredada de styles.css).
+ *   Pesos usados: 300 (cita), 600 (pestañas), 700 (botón), 800 (eslogan).
+ * - Colores: SIEMPRE variables globales de styles.css.
+ * - La columna derecha ya no tiene una tarjeta "flotando" dentro:
+ *   la propia columna es la tarjeta (pestañas arriba, formulario centrado).
+ * - Los mensajes de error tienen su hueco SIEMPRE reservado para que
+ *   el formulario no cambie de tamaño al aparecer/desaparecer.
+ */
+
+/* Contenedor general: centra la caja sobre el fondo crema */
+.acceso {
+  min-height: calc(100vh - 80px); /* descontamos aprox. la navbar */
+  background-color: var(--color-crema);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 3rem 1rem;
+}
+
+/* ==========================
+   CAJA DE DOS COLUMNAS
+   ========================== */
+
+.acceso__caja {
+  display: grid;
+  grid-template-columns: 5fr 6fr; /* panel algo más estrecho que el formulario */
+
+  width: 100%;
+  max-width: 980px;
+
+  /* Altura fija de referencia: cubre la pestaña más alta (registro).
+     Así al cambiar de pestaña la caja NO se redimensiona. */
+  min-height: 640px;
+
+  background: var(--color-blanco);
+  border-radius: 16px;
+  overflow: hidden; /* el degradado y los libros respetan el redondeo */
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================
+   PANEL DE MARCA (izquierda)
+   ========================== */
+
+.acceso__panel {
+  position: relative;
+  overflow: hidden; /* recorta los libros decorativos que se salen */
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 2.5rem 2rem;
+
+  /* Mismo patrón 135deg que el dashboard del admin, pero sutil:
+     azul navbar dominante y el morado asomando por la esquina. */
+  background: linear-gradient(135deg, var(--color-azul) 45%, var(--color-morado) 145%);
+
+  color: var(--color-crema);
+}
+
+/* Libros decorativos gigantes y semitransparentes de fondo */
+.acceso__deco {
+  position: absolute;
+  pointer-events: none; /* que no molesten al ratón */
+  user-select: none;
+}
+
+.acceso__deco--libro {
+  right: -2rem;
+  bottom: -1.5rem;
+  font-size: 11rem;
+  color: var(--color-morado);
+  opacity: 0.35;
+}
+
+.acceso__deco--marca {
+  left: -1.2rem;
+  top: 38%;
+  font-size: 5.5rem;
+  color: var(--color-turquesa);
+  opacity: 0.18;
+}
+
+/* Logo blanco, el mismo de la navbar */
+.acceso__logo {
+  width: 200px;
+  height: auto;
+}
+
+/* Eslogan: peso 800, como los títulos destacados del catálogo */
+.acceso__eslogan {
+  margin: 2rem 0 0;
+
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  font-weight: 800;
+  line-height: 1.25;
+
+  color: var(--color-blanco);
+}
+
+/* Cita: Montserrat 300 (el proyecto no carga cursivas reales,
+   así que jugamos con el peso ligero en lugar de italic) */
+.acceso__cita {
+  margin: 1rem 0 0;
+
+  font-weight: 300;
+  font-size: 0.95rem;
+  line-height: 1.5;
+
+  color: var(--color-gris-claro);
+}
+
+/* Ventajas (como las de Casa del Libro), ancladas abajo del panel */
+.acceso__ventajas {
+  margin: auto 0 0; /* empuja la lista al fondo del panel */
+  padding: 2rem 0 0;
+
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+
+  position: relative; /* por encima de los libros decorativos */
+}
+
+.acceso__ventajas li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  font-size: 0.85rem;
+}
+
+.acceso__ventajas .material-symbols-outlined {
+  font-size: 1.3rem;
+  color: var(--color-turquesa);
+}
+
+/* ==========================
+   COLUMNA DEL FORMULARIO (derecha)
+   ==========================
+   La columna entera es la "tarjeta": pestañas a todo el ancho arriba
+   y el formulario centrado verticalmente en el espacio restante.
+   Así la pestaña de login (más corta) queda centrada en lugar de
+   dejar un hueco vacío debajo. */
+
+.acceso__formulario {
+  display: flex; /* para que la tarjeta interior estire a toda la altura */
+}
+
+.acceso__tarjeta {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  background: var(--color-blanco);
+}
+
+/* ==========================
+   PESTAÑAS (Entrar / Nuevo cliente)
+   ========================== */
+
+.acceso__pestanas {
+  display: flex;
+}
+
+.acceso__pestana {
+  flex: 1;
+  padding: 1.1rem;
+
+  background: var(--color-gris-claro);
+  border: none;
+  border-bottom: 3px solid transparent;
+
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-gris-medio);
+
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+/* Pestaña activa: fondo blanco y subrayado morado (acento de la marca) */
+.acceso__pestana--activa {
+  background: var(--color-blanco);
+  color: var(--color-azul);
+  border-bottom-color: var(--color-morado);
+}
+
+/* ==========================
+   CUERPO DEL FORMULARIO
+   ========================== */
+
+.acceso__cuerpo {
+  flex: 1; /* ocupa todo el alto bajo las pestañas... */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* ...y centra el formulario verticalmente */
+
+  width: 100%;
+  max-width: 420px; /* el formulario no se estira de lado a lado */
+  margin: 0 auto;
+
+  padding: 2rem 2.5rem;
+}
+
+.acceso__cuerpo h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-azul);
+  margin-bottom: 1.2rem;
+}
+
+/* Aviso informativo del registro (validación por admin) */
+.acceso__aviso {
+  font-size: 0.85rem;
+  color: var(--color-gris-medio);
+  margin-bottom: 1.2rem;
+}
+
+/* ==========================
+   CAMPOS
+   ==========================
+   Cada campo reserva SIEMPRE el hueco del mensaje de error
+   (padding-bottom) y el mensaje se pinta en posición absoluta
+   dentro de ese hueco. Resultado: los errores aparecen y
+   desaparecen sin que el formulario cambie de tamaño. */
+
+.acceso__campo {
+  position: relative; /* ancla del mensaje de error absoluto */
+  margin-bottom: 0.3rem;
+  padding-bottom: 1.25rem; /* hueco reservado para el error */
+}
+
+.acceso__campo label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--color-gris-medio);
+  margin-bottom: 0.4rem;
+}
+
+.acceso__campo input {
+  width: 100%;
+  padding: 0.7rem;
+
+  border: 1px solid var(--color-turquesa);
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--color-azul);
+}
+
+.acceso__campo input:focus {
+  outline: none;
+  border-color: var(--color-morado);
+}
+
+/* Borde rosa cuando el campo es inválido Y el usuario ya lo ha tocado.
+   Angular añade las clases ng-invalid / ng-touched automáticamente
+   a los controles de los formularios reactivos. */
+.acceso__campo input.ng-invalid.ng-touched {
+  border-color: var(--color-rosa);
+}
+
+/* Caso especial: el error "noCoinciden" lo pone el validador DEL GRUPO,
+   no del control, así que el input de repetir contraseña nunca se marca
+   ng-invalid por él. Esta clase se aplica a mano desde el HTML con un
+   binding [class.acceso__input--error]. Va después de la regla de :focus
+   para ganarle en cascada (misma especificidad, orden posterior). */
+.acceso__campo input.acceso__input--error {
+  border-color: var(--color-rosa);
+}
+
+/* Input de contraseña con el icono del ojo dentro */
+.acceso__input-contrasena {
+  position: relative;
+}
+
+.acceso__input-contrasena input {
+  padding-right: 2.6rem; /* hueco para el icono */
+}
+
+.acceso__ojo {
+  position: absolute;
+  top: 50%;
+  right: 0.6rem;
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: center;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-gris-medio);
+}
+
+.acceso__ojo:hover {
+  color: var(--color-morado);
+}
+
+/* Error de un campo concreto: vive DENTRO del hueco reservado,
+   en posición absoluta, así que no empuja al resto del formulario */
+.acceso__error-campo {
+  position: absolute;
+  left: 0;
+  bottom: 0.2rem;
+
+  margin: 0;
+  max-width: 100%;
+
+  color: var(--color-rosa);
+  font-size: 0.75rem;
+
+  /* Si el mensaje fuera más largo que el campo, lo recortamos
+     con puntos suspensivos en vez de saltar de línea (saltaría
+     fuera del hueco reservado y descuadraría) */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==========================
+   ALERTAS GLOBALES
+   ========================== */
+
+.acceso__alerta {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+
+  font-size: 0.85rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 8px;
+  margin-bottom: 1.2rem;
+}
+
+.acceso__alerta .material-symbols-outlined {
+  font-size: 1.2rem;
+}
+
+/* Error: rosa de la paleta sobre un tinte suave del mismo color */
+.acceso__alerta--error {
+  color: var(--color-rosa);
+  background: var(--color-crema);
+}
+
+/* Éxito: turquesa de la paleta */
+.acceso__alerta--ok {
+  color: var(--color-turquesa);
+  background: var(--color-crema);
+}
+
+/* ==========================
+   BOTÓN PRINCIPAL
+   ========================== */
+
+/* Botón ancho completo, como el "iniciar sesión" de Casa del Libro,
+   pero con el morado CTA de NextChapter */
+.acceso__btn {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 0.4rem;
+
+  background: var(--color-morado);
+  color: var(--color-blanco);
+
+  border: none;
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.acceso__btn:hover {
+  filter: brightness(0.92);
+}
+
+.acceso__btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Enlace para cambiar de pestaña debajo del botón */
+.acceso__cambio {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-gris-medio);
+  margin: 1.2rem 0 0;
+}
+
+.acceso__cambio button {
+  background: none;
+  border: none;
+  padding: 0;
+
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-morado);
+
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* ==========================
+   RESPONSIVE
+   ========================== */
+
+/* Tablet / pantallas medianas: una sola columna.
+   El panel pasa a ser una cabecera compacta encima del formulario. */
+@media (max-width: 900px) {
+  .acceso {
+    padding: 1.5rem 1rem;
+  }
+
+  .acceso__caja {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    min-height: 0; /* en columna única dejamos que crezca natural */
+  }
+
+  .acceso__panel {
+    padding: 1.5rem;
+  }
+
+  /* En modo compacto quitamos la cita y los libros decorativos */
+  .acceso__cita,
+  .acceso__deco {
+    display: none;
+  }
+
+  .acceso__logo {
+    width: 120px;
+  }
+
+  .acceso__eslogan {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+  }
+
+  /* Ventajas en dos columnas para que la cabecera no se alargue */
+  .acceso__ventajas {
+    margin-top: 1.2rem;
+    padding-top: 0;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem 1rem;
+  }
+
+  .acceso__ventajas li {
+    font-size: 0.78rem;
+  }
+
+  .acceso__cuerpo {
+    padding: 1.5rem 1.2rem;
+  }
+}
+
+/* Móvil pequeño: ocultamos también las ventajas para ir al grano */
+@media (max-width: 480px) {
+  .acceso__ventajas {
+    display: none;
+  }
+}

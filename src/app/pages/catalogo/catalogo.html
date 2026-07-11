@@ -1,0 +1,131 @@
+<section class="catalogo">
+    <div class="container-fluid">
+        <div class="row g-4">
+
+            <!-- Sidebar de filtros -->
+            <aside class="col-12 col-lg-3 catalogo__sidebar">
+                <app-filtros-catalogo (filtrosChange)="aplicarFiltros($event)" />
+            </aside>
+
+            <!-- Contenido principal -->
+            <main class="col-12 col-lg-9 catalogo__contenido">
+                <header class="catalogo__header">
+                    <div>
+                        <p class="catalogo__ruta">
+                            Inicio &gt; Explorar &gt; Catálogo
+                        </p>
+
+                        <h1>Explorar Catálogo</h1>
+
+                        <p>
+                            Mostrando {{ libros().length }} productos
+                        </p>
+                    </div>
+
+                    <!--
+                      Cuando cambia el select, ejecutamos ordenarLibros().
+                    -->
+                    <label class="catalogo__orden">
+                        Ordenar por:
+                        <select (change)="ordenarLibros($event)">
+                            <option value="novedades">Novedades</option>
+                            <option value="precio-menor">Precio menor</option>
+                            <option value="precio-mayor">Precio mayor</option>
+                        </select>
+                    </label>
+                </header>
+
+                <!--
+                  Si la petición al back sigue cargando,
+                  mostramos un mensaje al usuario.
+                -->
+                @if (cargando()) {
+                <p class="estado">Cargando libros...</p>
+                }
+
+                <!--
+                  Si hay error en la petición,
+                  mostramos el mensaje de error.
+                -->
+                @else if (error()) {
+                <p class="estado estado--error" role="alert">
+                    {{ error() }}
+                </p>
+                }
+
+                <!--
+                  Si la petición fue correcta,
+                  mostramos el listado de libros.
+                -->
+                @else {
+
+                <!-- Grid responsive con Bootstrap -->
+                <div class="row g-4">
+                    @for (libro of libros(); track libro.id) {
+
+                    <!--
+                              BOOTSTRAAAAAAAAAAAAAP
+                              col-12: móvil, 1 columna
+                              col-sm-6: tablet pequeña, 2 columnas
+                              col-md-4: tablet grande, 3 columnas
+                              col-lg-3: escritorio medio, 4 columnas
+                              col-xxl-2: escritorio grande, 6 columnas
+                            -->
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
+
+                        <!--
+                                  Componente reutilizable de tarjeta de libro.
+                                  Cómo MNario hizo con empleados.
+                                -->
+                        <app-libro-card [libro]="libro" />
+
+                    </div>
+                    }
+                </div>
+
+                <!--
+              PAGINACIÓN DEL CATÁLOGO
+            
+              Solo aparece cuando existe más
+              de una página de resultados.
+            -->
+                @if (totalPaginas() > 1) {
+
+                <nav class="catalogo__paginacion">
+
+                    <!-- Página anterior -->
+                    <button type="button" class="catalogo__pagina-nav" [disabled]="paginaActual() === 1"
+                        (click)="cambiarPagina(paginaActual() - 1)">
+
+                        ←
+                    </button>
+
+                    <!-- Números de página -->
+                    @for (pagina of paginas(); track pagina) {
+
+                    <button type="button" class="catalogo__pagina"
+                        [class.catalogo__pagina--activa]="paginaActual() === pagina" (click)="cambiarPagina(pagina)">
+
+                        {{ pagina }}
+
+                    </button>
+
+                    }
+
+                    <!-- Página siguiente -->
+                    <button type="button" class="catalogo__pagina-nav" [disabled]="paginaActual() === totalPaginas()"
+                        (click)="cambiarPagina(paginaActual() + 1)">
+
+                        →
+
+                    </button>
+                </nav>
+                }
+                }
+            </main>
+
+        </div>
+    </div>
+</section>
+
+<app-footer></app-footer>

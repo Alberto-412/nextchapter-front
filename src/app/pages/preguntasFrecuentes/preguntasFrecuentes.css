@@ -1,0 +1,189 @@
+/**
+ * Contenedor principal de la página FAQ.
+ */
+.faq {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+/**
+ * Hero superior de la página.
+ */
+.faq__hero {
+  max-width: 900px;
+  margin: 0 auto 4rem;
+  text-align: center;
+}
+
+.faq__eyebrow {
+  margin-bottom: 0.75rem;
+
+  color: var(--color-morado);
+
+  font-size: 0.85rem;
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.faq h1 {
+  margin-bottom: 1rem;
+
+  color: var(--color-azul);
+
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.faq__intro {
+  color: var(--color-gris-medio);
+  font-size: 1.08rem;
+  line-height: 1.8;
+}
+
+/**
+ * Grid de preguntas frecuentes.
+ */
+.faq__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+
+  margin-bottom: 4rem;
+}
+
+/**
+ * Tarjeta individual de cada pregunta.
+ */
+.faq__card {
+  padding: 2rem;
+  border-radius: 1.5rem;
+
+  background-color: var(--color-blanco);
+
+  box-shadow: 0 12px 30px rgb(31 42 68 / 8%);
+}
+
+.faq__icon {
+  display: inline-flex;
+
+  margin-bottom: 1rem;
+
+  color: var(--color-morado);
+
+  font-size: 2.2rem;
+
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.faq__card h2 {
+  margin-bottom: 0.75rem;
+
+  color: var(--color-azul);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.faq__card p {
+  color: var(--color-gris-medio);
+  line-height: 1.8;
+}
+
+/**
+ * Bloque final de contacto.
+ */
+.faq__cta {
+  padding: 3rem;
+  border-radius: 2rem;
+
+  background-color: var(--color-azul);
+
+  text-align: center;
+}
+
+.faq__cta-icon {
+  margin-bottom: 1rem;
+
+  color: var(--color-amarillo);
+
+  font-size: 3rem;
+
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.faq__cta h2 {
+  margin-bottom: 1rem;
+
+  color: var(--color-blanco);
+
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.faq__cta p {
+  max-width: 760px;
+  margin: 0 auto 1.5rem;
+
+  color: var(--color-gris-claro);
+
+  line-height: 1.8;
+}
+
+.faq__cta a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1rem 1.75rem;
+  border-radius: 999px;
+
+  background-color: var(--color-amarillo);
+  color: var(--color-azul);
+
+  font-weight: 800;
+  text-decoration: none;
+
+  transition: all 0.2s ease;
+}
+
+.faq__cta a:hover {
+  background-color: var(--color-rosa);
+  color: var(--color-blanco);
+}
+
+/**
+ * Responsive para tablets.
+ */
+@media (max-width: 1000px) {
+  .faq__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/**
+ * Responsive para móviles.
+ */
+@media (max-width: 700px) {
+  .faq {
+    padding: 3rem 1rem;
+  }
+
+  .faq__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faq__cta {
+    padding: 2rem 1.25rem;
+  }
+}

@@ -1,0 +1,17 @@
+// TARJETA RESUMEN DEL PEDIDO
+
+<div class="order-card">
+  <div class="order-card-top">
+    <div>
+      <p class="order-id">Pedido #{{ pedido().id }}</p>
+      <p class="order-fecha">{{ pedido().fecha_pedido | date: 'dd/MM/yyyy' }}</p>
+    </div>
+    <app-order-status-badge [estado]="pedido().estado" />
+  </div>
+  <div class="order-card-bottom">
+    <span class="order-total">{{ pedido().total }} €</span>
+    <a [routerLink]="['/orders', pedido().id]" class="order-ver">Ver detalle</a>
+  </div>
+</div>
+
+

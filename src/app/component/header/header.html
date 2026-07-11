@@ -1,0 +1,43 @@
+<header class="header">
+
+    <!-- LOGO -->
+    <a routerLink="/" class="header-logo">
+        <img src="image/nextchapter_logo_next_chapter_white.png" alt="NextChapter" height="40" />
+    </a>
+
+    <!-- BUSCADOR -->
+    <div class="header-search">
+        <input type="text" placeholder="Buscar libros, manga, cómics y más..." />
+        <button>🔍</button>
+    </div>
+
+    <!-- NAV -->
+    <nav class="header-nav">
+        <a routerLink="/catalogo">Categorías</a>
+        <a routerLink="/novedades">Novedades</a>
+        <a routerLink="/ofertas">Ofertas</a>
+    </nav>
+
+    <!-- ICONOS -->
+    <div class="header-icons">
+        <a routerLink="/wishlist">
+            <span>🤍</span>
+            <span>Favoritos</span>
+        </a>
+        <a routerLink="/perfil">
+            <span>👤</span>
+            <span>Mi cuenta</span>
+        </a>
+        @if (!isLoggedIn()) {
+        <a routerLink="/login">Entrar</a>
+        }
+        @if (isLoggedIn()) {
+        <button (click)="logout()">Cerrar sesión</button>
+        }
+        <a routerLink="/carrito">
+            <span>🛒</span>
+            <span>Carrito</span>
+        </a>
+    </div>
+
+</header>

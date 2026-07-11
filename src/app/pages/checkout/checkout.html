@@ -1,0 +1,53 @@
+<div class="checkout-container">
+  <h1>Revisión del Pedido</h1>
+
+  <div class="checkout-grid">
+    <div class="checkout-main">
+      <section class="bloque">
+        <h2><span class="material-symbols-outlined">local_shipping</span> Información de Envío</h2>
+        <label>Dirección de envío</label>
+        <input type="text" placeholder="Calle, número, ciudad, código postal"
+               [ngModel]="direccion_envio()" (ngModelChange)="direccion_envio.set($event)" />
+      </section>
+
+      <section class="bloque">
+        <h2><span class="material-symbols-outlined">credit_card</span> Método de Pago</h2>
+        <select [ngModel]="metodo_pago()" (ngModelChange)="metodo_pago.set($event)">
+          <option value="tarjeta">Tarjeta</option>
+          <option value="paypal">PayPal</option>
+          <option value="bizum">Bizum</option>
+          <option value="google_pay">Google Pay</option>
+          <option value="apple_pay">Apple Pay</option>
+        </select>
+      </section>
+
+      <section class="bloque">
+        <h2>Artículos en tu pedido</h2>
+        @for (item of items(); track item.id_producto) {
+          <div class="checkout-item">
+            <img [src]="item.imagen" [alt]="item.titulo" />
+            <div class="checkout-item-info">
+              <p class="checkout-item-titulo">{{ item.titulo }}</p>
+              <p class="checkout-item-cant">Cant: {{ item.cantidad }}</p>
+            </div>
+            <span class="checkout-item-precio">{{ item.precio * item.cantidad }} €</span>
+          </div>
+        }
+      </section>
+    </div>
+
+    <div class="checkout-lateral">
+      <app-checkout-summary
+        [subtotal]="subtotal()"
+        [cargando]="cargando()"
+        (finalizar)="finalizarPedido()" />
+      @if (error()) { <p class="checkout-error">{{ error() }}</p> }
+      @if (necesitaLogin()) {
+        <div class="checkout-login-aviso">
+          <p>Para finalizar tu pedido necesitas iniciar sesión.</p>
+          <button type="button" class="checkout-login-btn" (click)="irALogin()">Iniciar sesión</button>
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,237 @@
+/**
+ * Footer general de NextChapter.
+ *
+ * Usamos Bootstrap solo para el responsive en el HTML.
+ * El estilo visual lo controlamos aquí con CSS propio.
+ */
+.footer-nextchapter {
+  width: 100%;
+  overflow-x: hidden;
+
+  padding: 4rem 0 2rem;
+
+  background-color: var(--color-azul);
+  color: var(--color-blanco);
+}
+
+/**
+ * Parte superior del footer.
+ *
+ * Aquí tenemos:
+ * - newsletter compacto a la izquierda
+ * - enlaces e información a la derecha
+ */
+.footer-nextchapter__top {
+  align-items: center;
+}
+
+/**
+ * Contenedor del newsletter dentro del footer.
+ *
+ * Le damos un ancho máximo para que no se estire
+ * como el newsletter grande de la Home.
+ */
+.footer-nextchapter__newsletter {
+  max-width: 520px;
+}
+
+/**
+ * Contenido de enlaces del footer.
+ */
+.footer-nextchapter__content {
+  align-items: flex-start;
+}
+
+/**
+ * Bloque de marca.
+ */
+.footer-nextchapter__brand {
+  max-width: 360px;
+}
+
+/**
+ * Logo del footer.
+ */
+.footer-nextchapter__logo {
+  width: 150px;
+  max-width: 100%;
+  height: auto;
+
+  margin-bottom: 1.5rem;
+}
+
+/**
+ * Texto de la marca.
+ */
+.footer-nextchapter__brand p {
+  margin: 0;
+
+  color: var(--color-gris-claro);
+
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/**
+ * Títulos de las columnas.
+ */
+.footer-nextchapter h3 {
+  margin-bottom: 1rem;
+
+  color: var(--color-amarillo);
+
+  font-size: 1rem;
+  font-weight: 800;
+
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/**
+ * Listas del footer.
+ */
+.footer-nextchapter ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+/**
+ * Enlaces.
+ */
+.footer-nextchapter a {
+  color: var(--color-gris-claro);
+
+  font-size: 0.95rem;
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.footer-nextchapter a:hover {
+  color: var(--color-turquesa);
+  transform: translateX(4px);
+}
+
+/**
+ * Información de contacto.
+ */
+.footer-nextchapter__info li {
+  color: var(--color-gris-claro);
+
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/**
+ * Parte inferior del footer.
+ */
+.footer-nextchapter__bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  width: 100%;
+
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+
+  border-top: 1px solid rgb(255 255 255 / 12%);
+}
+
+.footer-nextchapter__bottom p {
+  margin: 0;
+
+  color: var(--color-gris-claro);
+
+  font-size: 0.85rem;
+}
+
+/**
+ * Variante compacta para usar el newsletter dentro del footer.
+ */
+.newsletter--compact {
+  width: 100%;
+  max-width: 100%;
+
+  padding: 2rem;
+  margin: 0;
+
+  border-radius: 1.5rem;
+}
+
+.newsletter--compact h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+.newsletter--compact .newsletter__texto {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.newsletter--compact .newsletter__form {
+  width: 100%;
+  max-width: 100%;
+}
+
+/**
+ * Contenedor principal del footer.
+ *
+ * Usamos un ancho similar al container-xl de Bootstrap.
+ */
+.footer-nextchapter .container {
+  width: 100%;
+  max-width: 1320px;
+}
+
+/**
+ * Responsive tablet.
+ */
+@media (width <= 992px) {
+  .footer-nextchapter__newsletter {
+    max-width: 100%;
+  }
+}
+
+/**
+ * Responsive móvil.
+ */
+@media (width <= 768px) {
+  .footer-nextchapter {
+    padding: 3rem 0 1.5rem;
+  }
+
+  .footer-nextchapter__brand {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .footer-nextchapter__logo {
+    width: 130px;
+  }
+
+  .footer-nextchapter__bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/**
+ * Móviles pequeños.
+ */
+@media (width <= 576px) {
+  .newsletter--compact {
+    padding: 1.5rem;
+  }
+
+  .footer-nextchapter__bottom {
+    width: 100%;
+  }
+}
